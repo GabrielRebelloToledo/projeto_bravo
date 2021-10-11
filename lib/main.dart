@@ -1,4 +1,5 @@
 import 'package:bravo/components/auth_form.dart';
+import 'package:bravo/pages/auth_or_app_page.dart';
 import 'package:bravo/pages/auth_page.dart';
 import 'package:bravo/pages/loading_page.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.blue,
       ),
-      home: const AuthPage(),
+      home: const AuthOrAppPage(),
       debugShowCheckedModeBanner: false,
     );
   }
