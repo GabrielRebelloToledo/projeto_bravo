@@ -1,6 +1,6 @@
 # bravo
 
-Projeto para trabalho final de Gestão de Serviços.
+A new Flutter project.
 
 ## Getting Started
 

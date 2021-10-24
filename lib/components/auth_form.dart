@@ -1,123 +1,171 @@
-import 'package:bravo/components/user_image_picker.dart';
-import 'package:bravo/core/models/auth_form_data.dart';
+
+import 'package:bravo/exceptions/auth_exception.dart';
+import 'package:bravo/models/auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:provider/provider.dart';
+
+enum AuthMode { Signup, Login }
 
 class AuthForm extends StatefulWidget {
-  final void Function(AuthFormData) onSubmit;
-
-  const AuthForm({
-    Key? key,
-    required this.onSubmit,
-  }) : super(key: key);
-
   @override
-  State<AuthForm> createState() => _AuthFormState();
+  _AuthFormState createState() => _AuthFormState();
 }
 
 class _AuthFormState extends State<AuthForm> {
-  //acesso aos dados do formulario atravez do globalkey
+  final _passwordController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
-  //classe que irá guardar os dados do formulário
-  final _AuthFormData = AuthFormData();
 
-  void _handleImagemPick(File image) {
-    _AuthFormData.image = image;
+  bool _isLoading = false;
+
+  AuthMode _authMode = AuthMode.Login;
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
+
+  bool _isLogin() => _authMode == AuthMode.Login;
+  bool _isSignup() => _authMode == AuthMode.Signup;
+
+  void _switchAuthMode() {
+    setState(() {
+      if (_isLogin()) {
+        _authMode = AuthMode.Signup;
+      } else {
+        _authMode = AuthMode.Login;
+      }
+    });
   }
-void _showError(String msg){
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar
-    (
-      content: Text(msg),
-      backgroundColor: Theme.of(context).errorColor,
-  )
-);
-}
 
-  //metodo para submeter o formulario
-  void _submit() {
+  void _showErrorDialog(String msg) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Ocorreu um erro'),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Fechar'),
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
     final isValid = _formKey.currentState?.validate() ?? false;
-
-    if (!isValid) return;
-
-    if(_AuthFormData.image == null && _AuthFormData.isSinup){
-      return _showError('Imagem não selecionada!');
+    if (!isValid) {
+      return;
     }
 
-    widget.onSubmit(_AuthFormData);
+    setState(() => _isLoading = true);
+
+    _formKey.currentState?.save();
+    Auth auth = Provider.of(context, listen: false);
+    try {
+      if (_isLogin()) {
+        //Login
+        await auth.login(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      } else {
+        //Registrar usuario
+        await auth.signup(
+          _authData['email']!,
+          _authData['password']!,
+        );
+      }
+    } on AuthException catch (error) {
+      _showErrorDialog(error.toString());
+    } catch (error) {
+      _showErrorDialog('Ocorreu um erro inesperado!');
+    }
+
+    setState(() => _isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
     return Card(
-      margin: EdgeInsets.all(20),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+      elevation: 8,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Container(
+        padding: const EdgeInsetsDirectional.all(16),
+        height: _isLogin() ? 310 : 400,
+        width: deviceSize.width * 0.75,
         child: Form(
             key: _formKey,
             child: Column(
               children: [
-                if (_AuthFormData.isSinup)
-                  UserImagePicker(
-                    onImagePick: _handleImagemPick,
-                  ),
-                if (_AuthFormData.isSinup)
-                  TextFormField(
-                    key: ValueKey('nome'),
-                    initialValue: _AuthFormData.name,
-                    onChanged: (name) => _AuthFormData.name = name,
-                    decoration: InputDecoration(label: Text('Nome')),
-                    validator: (_name) {
-                      final name = _name ?? '';
-                      if (name.trim().length < 5) {
-                        return 'Nome precisa conter no mínimo 5 caracteres';
-                      }
-                      return null;
-                    },
-                  ),
                 TextFormField(
-                  key: ValueKey('email'),
-                  initialValue: _AuthFormData.email,
-                  onChanged: (email) => _AuthFormData.email = email,
-                  decoration: InputDecoration(label: Text('E-mail')),
+                  decoration: InputDecoration(labelText: 'E-mail'),
+                  keyboardType: TextInputType.emailAddress,
+                  onSaved: (email) => _authData['email'] = email ?? '',
                   validator: (_email) {
                     final email = _email ?? '';
-                    if (!email.contains('@')) {
-                      return 'E-mail informado não é valido.';
+                    if (email.trim().isEmpty || !email.contains('@')) {
+                      return 'informe um e-mail válido';
                     }
                     return null;
                   },
                 ),
                 TextFormField(
-                  key: ValueKey('password'),
-                  initialValue: _AuthFormData.password,
-                  onChanged: (password) => _AuthFormData.password = password,
+                  decoration: InputDecoration(labelText: 'Senha'),
+                  keyboardType: TextInputType.text,
+                  controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(label: Text('Senha')),
+                  onSaved: (password) => _authData['password'] = password ?? '',
                   validator: (_password) {
                     final password = _password ?? '';
-                    if (password.length < 6) {
-                      return 'Senha deve conter no mínimo 6 caracteres';
+                    if (password.isEmpty || password.length < 5) {
+                      return 'informe uma senha válida';
                     }
                     return null;
                   },
                 ),
+                if (_isSignup())
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Confirmar Senha'),
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    validator: _isLogin()
+                        ? null
+                        : (_password) {
+                            final password = _password ?? '';
+                            if (password != _passwordController.text) {
+                              return 'Senhas informadas não conferem.';
+                            }
+                            return null;
+                          },
+                  ),
                 SizedBox(
-                  height: 12,
+                  height: 20,
                 ),
-                ElevatedButton(
+                if (_isLoading)
+                  CircularProgressIndicator()
+                else
+                  ElevatedButton(
                     onPressed: _submit,
-                    child:
-                        Text(_AuthFormData.isLogin ? 'Entrar' : 'Cadastrar')),
+                    child: Text(
+                      _authMode == AuthMode.Login ? 'ENTRAR' : 'REGISTRAR',
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 8),
+                    ),
+                  ),
+                Spacer(),
                 TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _AuthFormData.toggleAuthMode();
-                      });
-                    },
-                    child: Text(_AuthFormData.isLogin
-                        ? 'Criar uma nova conta ?'
-                        : 'já possui conta ?')),
+                    onPressed: _switchAuthMode,
+                    child: Text(
+                      _isLogin() ? 'DESEJA REGISTRAR ' : 'JÁ POSSUI CONTA?',
+                    ))
               ],
             )),
       ),
