@@ -1,5 +1,5 @@
-
 import 'package:bravo/provider/pessoas.dart';
+import 'package:bravo/provider/userRegisterProvider.dart';
 import 'package:bravo/views/auth_or_home_page.dart';
 import 'package:bravo/views/cadastro.dart';
 import 'package:bravo/views/home.dart';
@@ -31,9 +31,21 @@ class MyApp extends StatelessWidget {
           //Logica para autenticação
           update: (ctx, auth, previous) {
             return ProductList(
-                auth.token ?? '',
+              auth.token ?? '',
               auth.userId ?? '',
-              previous?.items ?? [],);
+              previous?.items ?? [],
+            );
+          },
+        ),
+        ChangeNotifierProxyProvider<Auth, UserRegisterProvider>(
+          create: (context) => UserRegisterProvider(),
+          //Logica para autenticação
+          update: (ctx, auth, previous) {
+            return UserRegisterProvider(
+              auth.token ?? '',
+              auth.userId ?? '',
+              previous?.items ?? [],
+            );
           },
         ),
       ],
