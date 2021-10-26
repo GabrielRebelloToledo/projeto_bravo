@@ -2,7 +2,7 @@ class UserRegister {
   final String id;
   final String name;
   final String sex;
-  final DateTime birthDay;
+  final String birthDay;
   final String naturalidade;
   final String escolaridade;
   final String nameMother;
@@ -16,7 +16,7 @@ class UserRegister {
   final String cpf;
   final String identidade;
   final String emissor;
-  final DateTime dateEmissao;
+  final String dateEmissao;
   final String ddd;
   final String numbertelephone;
   final String email;

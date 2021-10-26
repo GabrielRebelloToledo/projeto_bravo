@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-//Metodo para persistir as insformações de login dentro do celular como a chave token de acesso.
-
-class Storage {
+class Store {
   static Future<bool> saveString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setString(key, value);

@@ -1,7 +1,10 @@
 
+import 'package:bravo/components/app_drawer.dart';
 import 'package:bravo/components/list_pessoas.dart';
+import 'package:bravo/components/list_users.dart';
 import 'package:bravo/models/auth.dart';
 import 'package:bravo/provider/pessoas.dart';
+import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +27,7 @@ class _HomeState extends State<Home> {
           IconButton(
             onPressed: () {
               Navigator.of(context).pushReplacementNamed(
-                Routes.cadastro,
+                Routes.cadastroP,
               );
             },
             icon: const Icon(Icons.add),
@@ -46,13 +49,15 @@ class _HomeState extends State<Home> {
           Navigator.of(context).pushNamed(Routes.cadastro);
         },
       ),
+      drawer: AppDrawer(),
       body: FutureBuilder(
         future: Provider.of<ProductList>(context, listen: false)
             .loadProducts(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          } else if (snapshot.error != null) {
+          } 
+          else if (snapshot.error != null) {
             return Center(
               child: Text('Ocorreu um erro!'),
             );

@@ -15,9 +15,21 @@ class ListUsers extends StatefulWidget {
 
 class _ListUsersState extends State<ListUsers> {
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
     final msg = ScaffoldMessenger.of(context);
-    return SingleChildScrollView(
+    
+    if(widget.users.name == ''){
+      Navigator.of(context).pushNamed(
+                                Routes.formorhome,
+                              );
+    }else{
+      Navigator.of(context).pushNamed(
+                                Routes.home,
+                              );
+    }
+     return Container(child: Text('aqui'),);
+    
+    /* SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Card(
@@ -93,6 +105,6 @@ class _ListUsersState extends State<ListUsers> {
           ),
         ),
       ),
-    );
+    );  */
   }
 }

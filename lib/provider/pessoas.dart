@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-
-
 import 'package:bravo/exceptions/http_exception.dart';
 import 'package:bravo/models/pessoa.dart';
 import 'package:bravo/utils/constants.dart';

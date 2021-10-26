@@ -1,14 +1,17 @@
 import 'dart:io';
-
 import 'package:bravo/models/pessoa.dart';
 import 'package:bravo/provider/pessoas.dart';
+import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ListPessoa extends StatefulWidget {
   final Pessoa pessoa;
 
-  const ListPessoa({Key? key, required this.pessoa}) : super(key: key);
+  const ListPessoa({
+    Key? key,
+    required this.pessoa,
+  }) : super(key: key);
 
   @override
   _ListPessoaState createState() => _ListPessoaState();
@@ -47,10 +50,10 @@ class _ListPessoaState extends State<ListPessoa> {
                             icon: Icon(Icons.edit),
                             color: Colors.green,
                             onPressed: () {
-                              /* Navigator.of(context).pushNamed(
-                                Routes.EDITAR_CADASTRO,
+                              Navigator.of(context).pushNamed(
+                                Routes.cadastro,
                                 arguments: widget.pessoa,
-                              ); */
+                              );
                             },
                           ),
                           IconButton(
