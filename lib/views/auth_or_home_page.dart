@@ -1,14 +1,11 @@
-import 'package:bravo/components/list_users.dart';
 import 'package:bravo/models/auth.dart';
 import 'package:bravo/views/auth_page.dart';
-import 'package:bravo/views/form_or_home.dart';
 import 'package:bravo/views/home.dart';
-import 'package:bravo/views/new_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthOrHomePage extends StatelessWidget {
- const AuthOrHomePage({Key? key}) : super(key: key);
+  const AuthOrHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +20,9 @@ class AuthOrHomePage extends StatelessWidget {
             child: Text('Ocorreu um erro!'),
           );
         } else {
-          return auth.isAuth ?  UsersViews(): AuthPage();
+          return auth.isAuth ? Home() : AuthPage();
         }
       },
     );
   }
 }
-
