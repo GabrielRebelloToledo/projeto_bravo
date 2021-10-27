@@ -1,5 +1,5 @@
 class Routes {
-  static const home = '/home';
+  static const home = '/';
   static const authOrHome = '/';
   static const cadastroP = '/cadastroP';
   static const cadastro = '/cadastro';

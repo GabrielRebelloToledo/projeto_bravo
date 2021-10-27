@@ -2,7 +2,6 @@ import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/views/auth_or_home_page.dart';
 import 'package:bravo/views/cadastro.dart';
-import 'package:bravo/views/form_or_home.dart';
 import 'package:bravo/views/home.dart';
 import 'package:bravo/views/user_registration.dart';
 import 'package:bravo/views/users_views.dart';
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         ),
         //Logica para autenticação mudança de ChangeNotifierProvider para ChangeNotifierProxyProvider
         //Colocando em estrutura gravitacional
-         ChangeNotifierProxyProvider<Auth, ProductList>(
+        ChangeNotifierProxyProvider<Auth, ProductList>(
           create: (context) => ProductList(),
           //Logica para autenticação
           update: (ctx, auth, previous) {
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
               previous?.items ?? [],
             );
           },
-        ), 
+        ),
         ChangeNotifierProxyProvider<Auth, UserRegisterProvider>(
           create: (context) => UserRegisterProvider(),
           //Logica para autenticação
@@ -64,8 +63,6 @@ class MyApp extends StatelessWidget {
             Routes.cadastro: (ctx) => UserRegistration(),
             Routes.cadastroP: (ctx) => ProductFormPage(),
             Routes.usuarios: (ctx) => UsersViews(),
-            Routes.formorhome: (ctx) => FormOrHome(),
-
           }),
     );
   }

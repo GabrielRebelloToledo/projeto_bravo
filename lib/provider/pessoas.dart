@@ -6,14 +6,13 @@ import 'package:bravo/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
 class ProductList with ChangeNotifier {
   final String _token;
   final String _userId;
   List<Pessoa> _items = [];
 
   List<Pessoa> get items => [..._items];
-  
+
   ProductList([
     this._token = '',
     this._userId = '',
@@ -51,7 +50,6 @@ class ProductList with ChangeNotifier {
           description: productData['description'],
           price: productData['price'],
           imageUrl: productData['imageUrl'],
-          
         ),
       );
     });
@@ -148,5 +146,3 @@ class ProductList with ChangeNotifier {
     }
   }
 }
-
-  

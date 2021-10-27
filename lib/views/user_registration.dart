@@ -13,7 +13,7 @@ class UserRegistration extends StatefulWidget {
 class _UserRegistrationState extends State<UserRegistration> {
   final _nameFocus = FocusNode();
   final _sexFocus = FocusNode();
-   final _birthDayFocus = FocusNode();
+  final _birthDayFocus = FocusNode();
   final _naturalidadeFocus = FocusNode();
   final _escolaridadeFocus = FocusNode();
   final _nameMotherFocus = FocusNode();
@@ -36,8 +36,6 @@ class _UserRegistrationState extends State<UserRegistration> {
   final _formData = Map<String, Object>();
 
   bool _isLoading = false;
-
- 
 
   @override
   void didChangeDependencies() {
@@ -69,13 +67,12 @@ class _UserRegistrationState extends State<UserRegistration> {
         _formData['ddd'] = useRegister.ddd;
         _formData['numbertelephone'] = useRegister.numbertelephone;
         _formData['email'] = useRegister.email;
-        
       }
     }
   }
 
   @override
-   void dispose() {
+  void dispose() {
     super.dispose();
     _nameFocus.dispose();
     _sexFocus.dispose();
@@ -96,11 +93,8 @@ class _UserRegistrationState extends State<UserRegistration> {
     _dateEmissaoFocus.dispose();
     _dddFocus.dispose();
     _numbertelephoneFocus.dispose();
-    _emailFocus.dispose(); 
-    
-  } 
-
-  
+    _emailFocus.dispose();
+  }
 
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -156,7 +150,7 @@ class _UserRegistrationState extends State<UserRegistration> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-            child: Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Form(
                   key: _formKey,
@@ -174,15 +168,15 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (name) => _formData['name'] = name ?? '',
                         validator: (_name) {
                           final name = _name ?? '';
-                          
+
                           if (name.trim().isEmpty) {
                             return 'Nome é obrigatório';
                           }
-                          
+
                           if (name.trim().length < 3) {
                             return 'Nome precisa no mínimo de 3 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -198,15 +192,15 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (sex) => _formData['sex'] = sex ?? '',
                         validator: (_sex) {
                           final sex = _sex ?? '';
-                          
+
                           if (sex.trim().isEmpty) {
                             return 'Sexo é obrigatório(Masculino ou Feminino) ';
                           }
-                          
+
                           if (sex.trim().length < 3) {
                             return 'Sexo precisa no mínimo de 3 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -219,18 +213,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_birthDayFocus);
                         },
-                        onSaved: (birthDay) => _formData['birthDay'] = birthDay ?? '',
+                        onSaved: (birthDay) =>
+                            _formData['birthDay'] = birthDay ?? '',
                         validator: (_birthDay) {
                           final birthDay = _birthDay ?? '';
-                          
+
                           if (birthDay.trim().isEmpty) {
                             return 'Data de Nascimento é obrigatória';
                           }
-                          
+
                           if (birthDay.trim().length < 10) {
                             return 'Data de Nascimento deve conter XX/XX/XXXX';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -241,44 +236,48 @@ class _UserRegistrationState extends State<UserRegistration> {
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_naturalidadeFocus);
+                          FocusScope.of(context)
+                              .requestFocus(_naturalidadeFocus);
                         },
-                        onSaved: (naturalidade) => _formData['naturalidade'] = naturalidade ?? '',
+                        onSaved: (naturalidade) =>
+                            _formData['naturalidade'] = naturalidade ?? '',
                         validator: (_naturalidade) {
                           final naturalidade = _naturalidade ?? '';
-                          
+
                           if (naturalidade.trim().isEmpty) {
                             return 'Naturalidade é obrigatório';
                           }
-                          
+
                           if (naturalidade.trim().length < 2) {
                             return 'Naturalidade precisa no mínimo de 2 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
                       TextFormField(
                         initialValue: _formData['escolaridade']?.toString(),
                         decoration: InputDecoration(
-                          labelText: 'Escolaridade',
+                          labelText: 'Escolaridade:',
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_escolaridadeFocus);
+                          FocusScope.of(context)
+                              .requestFocus(_escolaridadeFocus);
                         },
-                        onSaved: (escolaridade) => _formData['escolaridade'] = escolaridade ?? '',
+                        onSaved: (escolaridade) =>
+                            _formData['escolaridade'] = escolaridade ?? '',
                         validator: (_escolaridade) {
                           final escolaridade = _escolaridade ?? '';
-                          
+
                           if (escolaridade.trim().isEmpty) {
                             return 'Escolaridade é obrigatório';
                           }
-                          
+
                           if (escolaridade.trim().length < 5) {
                             return 'Escolaridade precisa no mínimo de 5 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -291,18 +290,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_nameMotherFocus);
                         },
-                        onSaved: (nameMother) => _formData['nameMother'] = nameMother ?? '',
+                        onSaved: (nameMother) =>
+                            _formData['nameMother'] = nameMother ?? '',
                         validator: (_nameMother) {
                           final nameMother = _nameMother ?? '';
-                          
+
                           if (nameMother.trim().isEmpty) {
                             return 'Nome completo da Mãe é obrigatório';
                           }
-                          
+
                           if (nameMother.trim().length < 20) {
                             return 'Nome completo da Mãe precisa no mínimo de 20 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -315,18 +315,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_nameFatherFocus);
                         },
-                        onSaved: (nameFather) => _formData['nameFather'] = nameFather ?? '',
+                        onSaved: (nameFather) =>
+                            _formData['nameFather'] = nameFather ?? '',
                         validator: (_nameFather) {
                           final nameFather = _nameFather ?? '';
-                          
+
                           if (nameFather.trim().isEmpty) {
                             return 'Nome completo dO Pai é obrigatório';
                           }
-                          
+
                           if (nameFather.trim().length < 20) {
                             return 'Nome completo dO Pai precisa no mínimo de 20 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -342,15 +343,15 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (cep) => _formData['cep'] = cep ?? '',
                         validator: (_cep) {
                           final cep = _cep ?? '';
-                          
+
                           if (cep.trim().isEmpty) {
                             return 'CEP é obrigatório';
                           }
-                          
+
                           if (cep.trim().length < 14) {
                             return 'CEP precisa no mínimo de 20 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -363,18 +364,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_enderecoFocus);
                         },
-                        onSaved: (endereco) => _formData['endereco'] = endereco ?? '',
+                        onSaved: (endereco) =>
+                            _formData['endereco'] = endereco ?? '',
                         validator: (_endereco) {
                           final endereco = _endereco ?? '';
-                          
+
                           if (endereco.trim().isEmpty) {
                             return 'Endereço é obrigatório';
                           }
-                          
+
                           if (endereco.trim().length < 20) {
                             return 'Endereço precisa no mínimo de 20 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -385,20 +387,22 @@ class _UserRegistrationState extends State<UserRegistration> {
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_complementoFocus);
+                          FocusScope.of(context)
+                              .requestFocus(_complementoFocus);
                         },
-                        onSaved: (complemento) => _formData['complemento'] = complemento ?? '',
+                        onSaved: (complemento) =>
+                            _formData['complemento'] = complemento ?? '',
                         validator: (_complemento) {
                           final complemento = _complemento ?? '';
-                          
+
                           if (complemento.trim().isEmpty) {
                             return 'Complemento é obrigatório';
                           }
-                          
+
                           if (complemento.trim().length < 1) {
                             return 'Complemento precisa no mínimo de 1 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -414,15 +418,15 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (bairro) => _formData['bairro'] = bairro ?? '',
                         validator: (_bairro) {
                           final bairro = _bairro ?? '';
-                          
+
                           if (bairro.trim().isEmpty) {
                             return 'Bairro é obrigatório';
                           }
-                          
+
                           if (bairro.trim().length < 10) {
                             return 'Bairro precisa no mínimo de 10 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -438,39 +442,43 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (cidade) => _formData['cidade'] = cidade ?? '',
                         validator: (_cidade) {
                           final cidade = _cidade ?? '';
-                          
+
                           if (cidade.trim().isEmpty) {
                             return 'Cidade é obrigatório';
                           }
-                          
+
                           if (cidade.trim().length < 10) {
                             return 'Nome precisa no mínimo de 10 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
                       TextFormField(
-                        initialValue: _formData['unidadefederativa']?.toString(),
+                        initialValue:
+                            _formData['unidadefederativa']?.toString(),
                         decoration: InputDecoration(
                           labelText: 'Unidade Federativa: ',
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_unidadefederativaFocus);
+                          FocusScope.of(context)
+                              .requestFocus(_unidadefederativaFocus);
                         },
-                        onSaved: (unidadefederativa) => _formData['unidadefederativa'] = unidadefederativa ?? '',
+                        onSaved: (unidadefederativa) =>
+                            _formData['unidadefederativa'] =
+                                unidadefederativa ?? '',
                         validator: (_unidadefederativa) {
                           final unidadefederativa = _unidadefederativa ?? '';
-                          
+
                           if (unidadefederativa.trim().isEmpty) {
                             return 'Nome é obrigatório';
                           }
-                          
+
                           if (unidadefederativa.trim().length < 3) {
                             return 'Nome precisa no mínimo de 3 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -486,15 +494,15 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (cpf) => _formData['cpf'] = cpf ?? '',
                         validator: (_cpf) {
                           final cpf = _cpf ?? '';
-                          
+
                           if (cpf.trim().isEmpty) {
                             return 'Nome é obrigatório';
                           }
-                          
+
                           if (cpf.trim().length < 10) {
                             return 'Nome precisa no mínimo de 10 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -507,18 +515,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_identidadeFocus);
                         },
-                        onSaved: (identidade) => _formData['identidade'] = identidade ?? '',
+                        onSaved: (identidade) =>
+                            _formData['identidade'] = identidade ?? '',
                         validator: (_identidade) {
                           final identidade = _identidade ?? '';
-                          
+
                           if (identidade.trim().isEmpty) {
                             return 'Identidade é obrigatório';
                           }
-                          
+
                           if (identidade.trim().length < 10) {
                             return 'Identidade precisa no mínimo de 10 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -531,18 +540,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onFieldSubmitted: (_) {
                           FocusScope.of(context).requestFocus(_emissorFocus);
                         },
-                        onSaved: (emissor) => _formData['emissor'] = emissor ?? '',
+                        onSaved: (emissor) =>
+                            _formData['emissor'] = emissor ?? '',
                         validator: (_emissor) {
                           final emissor = _emissor ?? '';
-                          
+
                           if (emissor.trim().isEmpty) {
                             return 'Emissor é obrigatório';
                           }
-                          
+
                           if (emissor.trim().length < 3) {
                             return 'Emissor precisa no mínimo de 3 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -553,27 +563,29 @@ class _UserRegistrationState extends State<UserRegistration> {
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_dateEmissaoFocus);
+                          FocusScope.of(context)
+                              .requestFocus(_dateEmissaoFocus);
                         },
-                        onSaved: (dateEmissao) => _formData['dateEmissao'] = dateEmissao ?? '',
+                        onSaved: (dateEmissao) =>
+                            _formData['dateEmissao'] = dateEmissao ?? '',
                         validator: (_dateEmissao) {
                           final dateEmissao = _dateEmissao ?? '';
-                          
+
                           if (dateEmissao.trim().isEmpty) {
                             return 'Data de Emissão é obrigatório';
                           }
-                          
+
                           if (dateEmissao.trim().length < 10) {
-                             return 'Data de Emissão deve conter XX/XX/XXXX';
+                            return 'Data de Emissão deve conter XX/XX/XXXX';
                           }
-                          
+
                           return null;
                         },
                       ),
                       TextFormField(
                         initialValue: _formData['ddd']?.toString(),
                         decoration: InputDecoration(
-                          labelText: 'DDD',
+                          labelText: 'DDD:',
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
@@ -582,15 +594,15 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (ddd) => _formData['ddd'] = ddd ?? '',
                         validator: (_ddd) {
                           final ddd = _ddd ?? '';
-                          
+
                           if (ddd.trim().isEmpty) {
                             return 'DDD é obrigatório';
                           }
-                          
+
                           if (ddd.trim().length < 3) {
                             return 'DDD precisa no mínimo de 3 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -601,20 +613,23 @@ class _UserRegistrationState extends State<UserRegistration> {
                         ),
                         textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_numbertelephoneFocus);
+                          FocusScope.of(context)
+                              .requestFocus(_numbertelephoneFocus);
                         },
-                        onSaved: (numbertelephone) => _formData['numbertelephone'] = numbertelephone ?? '',
+                        onSaved: (numbertelephone) =>
+                            _formData['numbertelephone'] =
+                                numbertelephone ?? '',
                         validator: (_numbertelephone) {
                           final numbertelephone = _numbertelephone ?? '';
-                          
+
                           if (numbertelephone.trim().isEmpty) {
                             return 'DDD é obrigatório';
                           }
-                          
+
                           if (numbertelephone.trim().length < 3) {
                             return 'DDD precisa no mínimo de 3 letras.';
                           }
-                          
+
                           return null;
                         },
                       ),
@@ -630,26 +645,20 @@ class _UserRegistrationState extends State<UserRegistration> {
                         onSaved: (email) => _formData['email'] = email ?? '',
                         validator: (_email) {
                           final email = _email ?? '';
-                          
+
                           if (email.trim().isEmpty) {
                             return 'Nome é obrigatório';
                           }
-                          
+
                           if (email.trim().length < 5) {
                             return 'Nome precisa no mínimo de 5 letras.';
                           }
-                          
+
                           return null;
                         },
-                      ), 
-                          
-                          
-                          
-                          
-                          
-                          
-                          
-                     /*  TextFormField(
+                      ),
+
+                      /*  TextFormField(
                         initialValue: _formData['sex']?.toString(),
                         decoration: InputDecoration(labelText: 'Sexo:'),
                         textInputAction: TextInputAction.next,
@@ -673,12 +682,11 @@ class _UserRegistrationState extends State<UserRegistration> {
                           return null;
                         }, 
                       ),*/
-                      
                     ],
                   ),
                 ),
               ),
-          ),
+            ),
     );
   }
 }

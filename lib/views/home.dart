@@ -1,4 +1,3 @@
-
 import 'package:bravo/components/app_drawer.dart';
 import 'package:bravo/components/list_pessoas.dart';
 import 'package:bravo/components/list_users.dart';
@@ -21,7 +20,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Contatos'),
+        title: const Text('Novas Solicitações'),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -51,13 +50,11 @@ class _HomeState extends State<Home> {
       ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        future: Provider.of<ProductList>(context, listen: false)
-            .loadProducts(),
+        future: Provider.of<ProductList>(context, listen: false).loadProducts(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          } 
-          else if (snapshot.error != null) {
+          } else if (snapshot.error != null) {
             return Center(
               child: Text('Ocorreu um erro!'),
             );
