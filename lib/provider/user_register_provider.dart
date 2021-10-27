@@ -65,7 +65,8 @@ class UserRegisterProvider with ChangeNotifier {
           dateEmissao: userData['dateEmissao'],
           ddd: userData['ddd'],
           numbertelephone: userData['numbertelephone'],
-          email: userData['email'] 
+          email: userData['email'], 
+          termos: userData['termos'], 
         ),
       );
     });
@@ -96,7 +97,8 @@ class UserRegisterProvider with ChangeNotifier {
       dateEmissao: data['dateEmissao'] as String,
       ddd: data['ddd'] as String,
       numbertelephone: data['numbertelephone'] as String,
-      email: data['email'] as String 
+      email: data['email'] as String, 
+      termos: data['termos'] as String, 
     );
 
     if (hasId) {
@@ -130,7 +132,8 @@ class UserRegisterProvider with ChangeNotifier {
           "dateEmissao": users.dateEmissao,
           "ddd": users.ddd,
           "numbertelephone": users.numbertelephone,
-          "email": users.email 
+          "email": users.email,
+          "termos": users.termos 
         },
       ),
     );
@@ -157,7 +160,8 @@ class UserRegisterProvider with ChangeNotifier {
       dateEmissao: users.dateEmissao,
       ddd: users.ddd,
       numbertelephone: users.numbertelephone,
-      email: users.email 
+      email: users.email,
+      termos: users.termos
     ));
     notifyListeners();
   }

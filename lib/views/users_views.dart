@@ -3,6 +3,7 @@ import 'package:bravo/components/list_users.dart';
 import 'package:bravo/models/auth.dart';
 import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/routes/routes.dart';
+import 'package:bravo/views/users_not_register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,7 @@ class _UsersViewsState extends State<UsersViews> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Contatos'),
+        title: const Text('Perfil do Entregador'),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -47,25 +48,35 @@ class _UsersViewsState extends State<UsersViews> {
         },
       ),
       drawer: AppDrawer(),
-      body: FutureBuilder(
-        future: Provider.of<UserRegisterProvider>(context, listen: false)
-            .loadProducts(),
-        builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.data != null) {
-            return Center(
-              child: Text('Ocorreu um erro!'),
-            );
-          } else {
-            return Consumer<UserRegisterProvider>(
-              builder: (ctx, orders, child) => ListView.builder(
-                itemCount: orders.itemsCount,
-                itemBuilder: (ctx, i) => ListUsers(users: orders.items[i]),
-              ),
-            );
-          }
-        },
+      body: Column(
+        children: [
+          Container(
+            child: Text('sdadasdasdasdasas'),
+          ),
+          FutureBuilder(
+            future: Provider.of<UserRegisterProvider>(context, listen: false)
+                .loadProducts(),
+            initialData: UsersNotRegister(),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.error != null) {
+                return Center(
+                  child: Text('Ocorreu um erro!'),
+                );
+              } else if (snapshot.hasError == false) {
+                return Consumer<UserRegisterProvider>(
+                  builder: (ctx, orders, child) => ListView.builder(
+                    itemCount: orders.itemsCount,
+                    itemBuilder: (ctx, i) => ListUsers(users: orders.items[i]),
+                  ),
+                );
+              } else {
+                return UsersNotRegister();
+              }
+            },
+          ),
+        ],
       ),
     );
   }

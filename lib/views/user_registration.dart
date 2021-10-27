@@ -36,6 +36,8 @@ class _UserRegistrationState extends State<UserRegistration> {
   final _formData = Map<String, Object>();
 
   bool _isLoading = false;
+  String termosString = '';
+  bool termosBool = false;
 
   @override
   void didChangeDependencies() {
@@ -67,6 +69,7 @@ class _UserRegistrationState extends State<UserRegistration> {
         _formData['ddd'] = useRegister.ddd;
         _formData['numbertelephone'] = useRegister.numbertelephone;
         _formData['email'] = useRegister.email;
+        _formData['termos'] = useRegister.termos;
       }
     }
   }
@@ -156,6 +159,47 @@ class _UserRegistrationState extends State<UserRegistration> {
                   key: _formKey,
                   child: Column(
                     children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Termos e Serviços',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                      fontSize: 17),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Checkbox(
+                                  checkColor: Colors.white,
+                                  value: termosBool,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      termosBool = value!;
+                                      print(value);
+                                       if (value == true) {
+                                        print('Aqui');
+                                        termosString = 'Aceito';
+                                      } 
+                                    });
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                  child: Text(
+                                      'Você aceita os termos e Serviços ?')),
+                            ],
+                          ),
+                        ],
+                      ),
                       TextFormField(
                         initialValue: _formData['name']?.toString(),
                         decoration: InputDecoration(
@@ -657,31 +701,19 @@ class _UserRegistrationState extends State<UserRegistration> {
                           return null;
                         },
                       ),
-
-                      /*  TextFormField(
-                        initialValue: _formData['sex']?.toString(),
-                        decoration: InputDecoration(labelText: 'Sexo:'),
-                        textInputAction: TextInputAction.next,
-                        focusNode: _priceFocus,
-                        keyboardType: TextInputType.numberWithOptions(
-                          decimal: true,
+                      TextFormField(
+                        readOnly: true,
+                        initialValue: _formData['termos']?.toString(),
+                        decoration: InputDecoration(
+                          labelText: 'Termos de Serviços: ',
                         ),
+                        textInputAction: TextInputAction.next,
                         onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_descriptionFocus);
+                          FocusScope.of(context).requestFocus(_emailFocus);
                         },
-                        onSaved: (price) =>
-                            _formData['sex'] = double.parse(price ?? '0'),
-                        validator: (_price) {
-                          final priceString = _price ?? '';
-                          final price = double.tryParse(priceString) ?? -1;
-                          
-                          if (price <= 0) {
-                            return 'Informe um preço válido.';
-                          }
-                          
-                          return null;
-                        }, 
-                      ),*/
+                        onSaved: (termos) => _formData['termos'] = termosString,
+                        
+                      ),
                     ],
                   ),
                 ),
