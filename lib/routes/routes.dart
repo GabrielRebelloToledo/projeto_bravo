@@ -5,4 +5,6 @@ class Routes {
   static const cadastro = '/cadastro';
   static const usuarios = '/UsersViews';
   static const formorhome = '/formorhome';
+  static const termos = '/termos';
+  static const paginaCadastro = '/telaUserCadastro';
 }

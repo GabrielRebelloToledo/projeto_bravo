@@ -31,13 +31,13 @@ class AppDrawer extends StatelessWidget {
             title: Text('Cadastro Entregador'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(
-                Routes.cadastro,
+                Routes.paginaCadastro,
               );
             },
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.verified_user),
+            leading: Icon(Icons.person),
             title: Text('Seu Perfil'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(

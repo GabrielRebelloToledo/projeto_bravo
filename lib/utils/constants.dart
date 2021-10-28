@@ -6,5 +6,5 @@ class Constants {
   static const PRODUCT_BASE_URL =
       'https://bravo-59b1e-default-rtdb.firebaseio.com/products';
   static const ORDER_BASE_URL =
-      'https://bravo-59b1e-default-rtdb.firebaseio.com/orders';
+      'https://bravo-59b1e-default-rtdb.firebaseio.com/novoUsers';
 }

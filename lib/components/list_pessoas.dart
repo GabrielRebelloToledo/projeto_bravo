@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:io';
 import 'package:bravo/models/pessoa.dart';
+import 'package:bravo/models/user_register.dart';
 import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,11 @@ import 'package:provider/provider.dart';
 
 class ListPessoa extends StatefulWidget {
   final Pessoa pessoa;
-
+  
   const ListPessoa({
     Key? key,
     required this.pessoa,
+
   }) : super(key: key);
 
   @override

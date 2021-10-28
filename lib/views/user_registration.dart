@@ -1,5 +1,6 @@
 import 'package:bravo/models/user_register.dart';
 import 'package:bravo/provider/user_register_provider.dart';
+import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,7 @@ class _UserRegistrationState extends State<UserRegistration> {
   final _formData = Map<String, Object>();
 
   bool _isLoading = false;
-  String termosString = '';
+  String termosString = 'Aceito';
   bool termosBool = false;
 
   @override
@@ -185,17 +186,40 @@ class _UserRegistrationState extends State<UserRegistration> {
                                     setState(() {
                                       termosBool = value!;
                                       print(value);
-                                       if (value == true) {
+                                      if (value == true) {
                                         print('Aqui');
                                         termosString = 'Aceito';
-                                      } 
+                                      }
                                     });
                                   },
                                 ),
                               ),
                               Expanded(
-                                  child: Text(
-                                      'Você aceita os termos e Serviços ?')),
+                                child: Row(
+                                  children: [
+                                    Text('Você aceita os termos e Serviços ?'),
+                                    Padding(
+                                      padding: const EdgeInsets.all(7.0),
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pushNamed(
+                                            Routes.termos,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Ler termos',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.blue,
+                                            padding: EdgeInsets.all(3)),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -705,14 +729,10 @@ class _UserRegistrationState extends State<UserRegistration> {
                         readOnly: true,
                         initialValue: _formData['termos']?.toString(),
                         decoration: InputDecoration(
+                          
                           labelText: 'Termos de Serviços: ',
                         ),
-                        textInputAction: TextInputAction.next,
-                        onFieldSubmitted: (_) {
-                          FocusScope.of(context).requestFocus(_emailFocus);
-                        },
                         onSaved: (termos) => _formData['termos'] = termosString,
-                        
                       ),
                     ],
                   ),

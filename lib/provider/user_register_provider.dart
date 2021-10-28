@@ -72,6 +72,55 @@ class UserRegisterProvider with ChangeNotifier {
     });
     notifyListeners();
   }
+  Future<void> loadNewUser() async {
+    _items.clear();
+
+    final response = await http.get(
+      Uri.parse('${Constants.ORDER_BASE_URL}.json?auth=$_token'),
+    );
+    if (response.body == 'null') return;
+
+    final favResponse = await http.get(
+      Uri.parse(
+        '${Constants.USERS_BASE_URL}/.json?auth=$_token',
+      ),
+    );
+
+    Map<String, dynamic> favData =
+        favResponse.body == 'null' ? {} : jsonDecode(favResponse.body);
+
+    Map<String, dynamic> data = jsonDecode(response.body);
+    data.forEach((userId, userData) {
+      final isFavorite = favData[userId] ?? false;
+      _items.add(
+        UserRegister(
+          id: userId,
+          name: userData['name'],
+          sex: userData['sex'],
+          birthDay: userData['birthDay'],
+          naturalidade: userData['naturalidade'],
+          escolaridade: userData['escolaridade'],
+          nameMother: userData['nameMother'],
+          nameFather: userData['nameFather'],
+          cep: userData['cep'],
+          endereco: userData['endereco'],
+          complemento: userData['complemento'],
+          bairro: userData['bairro'],
+          cidade: userData['cidade'],
+          unidadefederativa: userData['unidadefederativa'],
+          cpf: userData['cpf'],
+          identidade: userData['identidade'],
+          emissor: userData['emissor'],
+          dateEmissao: userData['dateEmissao'],
+          ddd: userData['ddd'],
+          numbertelephone: userData['numbertelephone'],
+          email: userData['email'], 
+          termos: userData['termos'], 
+        ),
+      );
+    });
+    notifyListeners();
+  }
 
   Future<void> saveProduct(Map<String, Object> data) {
     bool hasId = data['id'] != null;

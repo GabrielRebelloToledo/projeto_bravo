@@ -8,28 +8,25 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UsersViews extends StatefulWidget {
-  const UsersViews({Key? key}) : super(key: key);
+
+
+ UsersViews({Key? key, }) : super(key: key);
+
+ 
 
   @override
   _UsersViewsState createState() => _UsersViewsState();
 }
 
 class _UsersViewsState extends State<UsersViews> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Perfil do Entregador'),
+         title: const Text('Perfil do Entregador'),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(
-                Routes.cadastro,
-              );
-            },
-            icon: const Icon(Icons.add),
-          ),
           IconButton(
             icon: const Icon(Icons.exit_to_app),
             onPressed: () {
@@ -41,42 +38,36 @@ class _UsersViewsState extends State<UsersViews> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(Routes.cadastro);
-        },
-      ),
+      
       drawer: AppDrawer(),
-      body: Column(
-        children: [
-          Container(
-            child: Text('sdadasdasdasdasas'),
-          ),
-          FutureBuilder(
-            future: Provider.of<UserRegisterProvider>(context, listen: false)
-                .loadProducts(),
-            initialData: UsersNotRegister(),
-            builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.error != null) {
-                return Center(
-                  child: Text('Ocorreu um erro!'),
-                );
-              } else if (snapshot.hasError == false) {
-                return Consumer<UserRegisterProvider>(
-                  builder: (ctx, orders, child) => ListView.builder(
-                    itemCount: orders.itemsCount,
-                    itemBuilder: (ctx, i) => ListUsers(users: orders.items[i]),
-                  ),
-                );
-              } else {
-                return UsersNotRegister();
-              }
-            },
-          ),
-        ],
+      body: FutureBuilder(
+        future: Provider.of<UserRegisterProvider>(context, listen: false)
+            .loadProducts(),  
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            /* print(snapshot.connectionState); */
+            return Center(child: CircularProgressIndicator());
+          } 
+          if (snapshot.hasData) {
+             print(snapshot.hasData); 
+            return Text('sdsadsadsadsadsadsadasdsad');
+          } 
+        
+          else if (snapshot.error != null) {
+            return Center(
+              child: Text('Ocorreu um erro!'),
+            );
+          } else {
+            return Consumer<UserRegisterProvider>(
+              builder: (ctx, orders, child) => ListView.builder(
+                itemCount: orders.itemsCount,
+                itemBuilder: (ctx, i) => ListUsers(users: orders.items[i],),
+              ),
+            );
+            
+            
+          }
+        },
       ),
     );
   }

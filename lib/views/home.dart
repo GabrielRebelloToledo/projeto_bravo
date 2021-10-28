@@ -1,9 +1,7 @@
 import 'package:bravo/components/app_drawer.dart';
 import 'package:bravo/components/list_pessoas.dart';
-import 'package:bravo/components/list_users.dart';
 import 'package:bravo/models/auth.dart';
 import 'package:bravo/provider/pessoas.dart';
-import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,15 +55,21 @@ class _HomeState extends State<Home> {
           } else if (snapshot.error != null) {
             return Center(
               child: Text('Ocorreu um erro!'),
+              
             );
           } else {
             return Consumer<ProductList>(
               builder: (ctx, orders, child) => ListView.builder(
                 itemCount: orders.itemsCount,
-                itemBuilder: (ctx, i) => ListPessoa(pessoa: orders.items[i]),
+                itemBuilder: (ctx, i)  =>
+                    ListPessoa(pessoa: orders.items[i])
+                
+                
               ),
+              
             );
           }
+      
         },
       ),
     );
