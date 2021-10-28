@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 class ListUsers extends StatefulWidget {
   final UserRegister users;
-  
 
   const ListUsers({Key? key, required this.users}) : super(key: key);
 
@@ -29,10 +28,8 @@ class _ListUsersState extends State<ListUsers> {
         termos = true;
       });
     }
-    return 
-    
-    SingleChildScrollView(
-      child:  Padding(
+    return SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Card(
           child: Column(
@@ -42,7 +39,7 @@ class _ListUsersState extends State<ListUsers> {
                       widget.users.name +
                       ',seu perfil ainda se encontra em análise, aguarde!')
                   : Text('Olá ' +
-                      widget.users.name  +
+                      widget.users.name +
                       ',seu perfil está autorizado'),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -207,12 +204,20 @@ class _ListUsersState extends State<ListUsers> {
                   ),
                 ),
               ),
-     FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(Routes.cadastro);
-        },
-      ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    child: Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(
+                        Routes.cadastro,
+                        arguments: widget.users,
+                      );
+                    },
+                  ),
+                  Text('Editar perfil')
+                ],
+              ),
             ],
           ),
         ),

@@ -20,8 +20,11 @@ class UsersViews extends StatefulWidget {
 
 class _UsersViewsState extends State<UsersViews> {
 
+  
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
          title: const Text('Perfil do Entregador'),
@@ -48,11 +51,6 @@ class _UsersViewsState extends State<UsersViews> {
             /* print(snapshot.connectionState); */
             return Center(child: CircularProgressIndicator());
           } 
-          if (snapshot.hasData) {
-             print(snapshot.hasData); 
-            return Text('sdsadsadsadsadsadsadasdsad');
-          } 
-        
           else if (snapshot.error != null) {
             return Center(
               child: Text('Ocorreu um erro!'),
@@ -60,9 +58,12 @@ class _UsersViewsState extends State<UsersViews> {
           } else {
             return Consumer<UserRegisterProvider>(
               builder: (ctx, orders, child) => ListView.builder(
+                
                 itemCount: orders.itemsCount,
+                
                 itemBuilder: (ctx, i) => ListUsers(users: orders.items[i],),
               ),
+              
             );
             
             

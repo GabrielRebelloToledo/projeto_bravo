@@ -9,11 +9,14 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          AppBar(
-            title: Text('Seja bem Vindo!'),
-            automaticallyImplyLeading: false,
+      child: ListView(
+        children: <Widget>[
+          UserAccountsDrawerHeader(
+            accountName: Text(''),
+            accountEmail: Text(''),
+            currentAccountPicture: FlutterLogo(
+              textColor: Colors.red,
+            ),
           ),
           Divider(),
           ListTile(
