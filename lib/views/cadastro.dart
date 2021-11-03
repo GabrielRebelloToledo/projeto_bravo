@@ -1,8 +1,9 @@
 import 'package:bravo/models/pessoa.dart';
 import 'package:bravo/provider/pessoas.dart';
+import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({Key? key}) : super(key: key);
@@ -23,11 +24,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
   bool _isLoading = false;
 
-  @override
+  /* @override
   void initState() {
     super.initState();
     _imageUrlFocus.addListener(updateImage);
-  }
+  } */
 
   @override
   void didChangeDependencies() {
@@ -40,11 +41,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
         final product = arg as Pessoa;
         _formData['id'] = product.id;
         _formData['name'] = product.name;
-        _formData['price'] = product.price;
-        _formData['description'] = product.description;
-        _formData['imageUrl'] = product.imageUrl;
+        _formData['dataReserva'] = product.datas;
+        _formData['pessoas'] = product.pessoas;
+        /* _formData['imageUrl'] = product.imageUrl;
 
-        _imageUrlController.text = product.imageUrl;
+        _imageUrlController.text = product.imageUrl; */
       }
     }
   }
@@ -55,21 +56,21 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _priceFocus.dispose();
     _descriptionFocus.dispose();
 
-    _imageUrlFocus.removeListener(updateImage);
-    _imageUrlFocus.dispose();
+    /* _imageUrlFocus.removeListener(updateImage);
+    _imageUrlFocus.dispose(); */
   }
 
-  void updateImage() {
+  /* void updateImage() {
     setState(() {});
-  }
+  } */
 
-  bool isValidImageUrl(String url) {
+  /* bool isValidImageUrl(String url) {
     bool isValidUrl = Uri.tryParse(url)?.hasAbsolutePath ?? false;
     bool endsWithFile = url.toLowerCase().endsWith('.png') ||
         url.toLowerCase().endsWith('.jpg') ||
         url.toLowerCase().endsWith('.jpeg');
     return isValidUrl && endsWithFile;
-  }
+  } */
 
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -88,7 +89,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         listen: false,
       ).saveProduct(_formData);
 
-      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed(Routes.splashScreen);
     } catch (error) {
       await showDialog<void>(
         context: context,
@@ -155,8 +156,31 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       },
                     ),
                     TextFormField(
-                      initialValue: _formData['price']?.toString(),
-                      decoration: InputDecoration(labelText: 'Preço'),
+                      initialValue: _formData['dataReserva']?.toString(),
+                      decoration:
+                          InputDecoration(labelText: 'Data da reserva: '),
+                      focusNode: _descriptionFocus,
+                      keyboardType: TextInputType.multiline,
+                      onSaved: (dataReserva) =>
+                          _formData['dataReserva'] = dataReserva ?? '',
+                      validator: (_datas) {
+                        final datas = _datas ?? '';
+
+                        if (datas.trim().isEmpty) {
+                          return 'Descrição é obrigatória.';
+                        }
+
+                        if (datas.trim().length < 10) {
+                          return 'Descrição precisa no mínimo de 10 letras.';
+                        }
+
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      initialValue: _formData['pessoas']?.toString(),
+                      decoration:
+                          InputDecoration(labelText: 'Quantidade de pessoas:'),
                       textInputAction: TextInputAction.next,
                       focusNode: _priceFocus,
                       keyboardType: TextInputType.numberWithOptions(
@@ -165,13 +189,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_descriptionFocus);
                       },
-                      onSaved: (price) =>
-                          _formData['price'] = double.parse(price ?? '0'),
-                      validator: (_price) {
-                        final priceString = _price ?? '';
-                        final price = double.tryParse(priceString) ?? -1;
+                      onSaved: (pessoas) =>
+                          _formData['pessoas'] = double.parse(pessoas ?? '0'),
+                      validator: (_pessoas) {
+                        final priceString = _pessoas ?? '';
+                        final pessoas = double.tryParse(priceString) ?? -1;
 
-                        if (price <= 0) {
+                        if (pessoas <= 0) {
                           return 'Informe um preço válido.';
                         }
 
@@ -179,70 +203,78 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       },
                     ),
                     TextFormField(
-                      initialValue: _formData['description']?.toString(),
-                      decoration: InputDecoration(labelText: 'Descrição'),
-                      focusNode: _descriptionFocus,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 3,
-                      onSaved: (description) =>
-                          _formData['description'] = description ?? '',
-                      validator: (_description) {
-                        final description = _description ?? '';
-
-                        if (description.trim().isEmpty) {
-                          return 'Descrição é obrigatória.';
-                        }
-
-                        if (description.trim().length < 10) {
-                          return 'Descrição precisa no mínimo de 10 letras.';
-                        }
-
-                        return null;
+                      initialValue: _formData['observation']?.toString(),
+                      decoration: InputDecoration(
+                          labelText: 'Observação:',
+                          hintText: 'A observação é opcional!'),
+                      textInputAction: TextInputAction.next,
+                      focusNode: _priceFocus,
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_descriptionFocus);
                       },
+                      onSaved: (observation) =>
+                          _formData['observation'] = observation ?? '',
+                      
+                    ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.yellow),
+                      padding: EdgeInsets.all(14),
+                      child: Text(
+                        'Caro cliente, pedimos um pagamento antecipado de R\$20,00 para que a reserva seja feita, o valor será sera abatido no valor final da conta. Para mais informações clique na aba sobre!',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
                     ),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Expanded(
-                          child: TextFormField(
-                            decoration:
-                                InputDecoration(labelText: 'Url da Imagem'),
-                            keyboardType: TextInputType.url,
-                            textInputAction: TextInputAction.done,
-                            focusNode: _imageUrlFocus,
-                            controller: _imageUrlController,
-                            onFieldSubmitted: (_) => _submitForm(),
-                            onSaved: (imageUrl) =>
-                                _formData['imageUrl'] = imageUrl ?? '',
-                            validator: (_imageUrl) {
-                              final imageUrl = _imageUrl ?? '';
-
-                              if (!isValidImageUrl(imageUrl)) {
-                                return 'Informe uma Url válida!';
-                              }
-
-                              return null;
-                            },
-                          ),
-                        ),
                         Container(
-                          height: 100,
-                          width: 100,
-                          margin: const EdgeInsets.only(
-                            top: 10,
-                            left: 10,
-                          ),
+                          width: MediaQuery.of(context).size.width * 0.9,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                              width: 1,
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.yellow),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Faça sua reserva pelo PIX: 21.221.123/0009-34',
+                                      style: TextStyle(
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.035),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                          alignment: Alignment.center,
-                          child: _imageUrlController.text.isEmpty
-                              ? Text('Informe a Url')
-                              : Image.network(_imageUrlController.text),
                         ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              final data =
+                                  ClipboardData(text: '21.221.123/0009-34');
+                              Clipboard.setData(data);
+                              ClipboardStatus.pasteable.toString();
+                            },
+                            child: Text('Clique para copiar'))
                       ],
                     ),
                   ],

@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Novas Solicitações'),
+        title: const Text('Suas Reservas Ativas:'),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed(
-                Routes.authOrHome,
+                Routes.home,
               );
             },
           ),
@@ -44,6 +44,7 @@ class _HomeState extends State<Home> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pushNamed(Routes.cadastro);
+          
         },
       ),
       drawer: AppDrawer(),
@@ -62,7 +63,7 @@ class _HomeState extends State<Home> {
               builder: (ctx, orders, child) => ListView.builder(
                 itemCount: orders.itemsCount,
                 itemBuilder: (ctx, i)  =>
-                    ListPessoa(pessoa: orders.items[i])
+                    ListPessoa(pessoa: orders.items[i], )
                 
                 
               ),

@@ -1,6 +1,8 @@
+import 'package:bravo/views/splash_screen.dart';
+
 class Routes {
-  static const home = '/';
-  static const authOrHome = '/';
+  static const splashScreen = '/';
+  static const home = '/home';
   static const cadastroP = '/cadastroP';
   static const cadastro = '/cadastro';
   static const usuarios = '/UsersViews';

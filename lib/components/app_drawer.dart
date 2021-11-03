@@ -59,7 +59,7 @@ class AppDrawer extends StatelessWidget {
               ).logout();
 
               Navigator.of(context).pushReplacementNamed(
-                Routes.authOrHome,
+                Routes.splashScreen,
               );
             },
           ),

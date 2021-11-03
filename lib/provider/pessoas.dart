@@ -27,10 +27,9 @@ class ProductList with ChangeNotifier {
     _items.clear();
 
     final response = await http.get(
-      Uri.parse('${Constants.PRODUCT_BASE_URL}.json?auth=$_token'),
+      Uri.parse('${Constants.PRODUCT_BASE_URL}/$_userId.json?auth=$_token'),
     );
     if (response.body == 'null') return;
-
     final favResponse = await http.get(
       Uri.parse(
         '${Constants.USER_FAVORITES_URL}.json?auth=$_token',
@@ -47,9 +46,10 @@ class ProductList with ChangeNotifier {
         Pessoa(
           id: productId,
           name: productData['name'],
-          description: productData['description'],
-          price: productData['price'],
-          imageUrl: productData['imageUrl'],
+          userid: _userId,
+          datas: productData['dataReserva'],
+          pessoas: productData['pessoas'],
+          observation: productData['observation'], 
         ),
       );
     });
@@ -62,9 +62,10 @@ class ProductList with ChangeNotifier {
     final product = Pessoa(
       id: hasId ? data['id'] as String : Random().nextDouble().toString(),
       name: data['name'] as String,
-      description: data['description'] as String,
-      price: data['price'] as double,
-      imageUrl: data['imageUrl'] as String,
+      userid: _userId,
+      datas: data['dataReserva'] as String,
+      pessoas: data['pessoas'] as double,
+      observation: data['observation'] as String, 
     );
 
     if (hasId) {
@@ -76,13 +77,26 @@ class ProductList with ChangeNotifier {
 
   Future<void> addProduct(Pessoa product) async {
     final response = await http.post(
-      Uri.parse('${Constants.PRODUCT_BASE_URL}.json?auth=$_token'),
+      Uri.parse('${Constants.PRODUCT_BASE_URL}/$_userId.json?auth=$_token'),
       body: jsonEncode(
         {
           "name": product.name,
-          "description": product.description,
-          "price": product.price,
-          "imageUrl": product.imageUrl,
+          "userid":_userId,
+          "dataReserva": product.datas,
+          "pessoas": product.pessoas,
+           "observation": product.observation, 
+        },
+      ),
+    );
+    final response2 = await http.post(
+      Uri.parse('${Constants.SolicitacoesdeReservas}.json?auth=$_token'),
+      body: jsonEncode(
+        {
+          "name": product.name,
+          "userid":_userId,
+          "dataReserva": product.datas,
+          "pessoas": product.pessoas,
+           "observation": product.observation, 
         },
       ),
     );
@@ -91,9 +105,19 @@ class ProductList with ChangeNotifier {
     _items.add(Pessoa(
       id: id,
       name: product.name,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
+      userid:_userId,
+      datas: product.datas,
+      pessoas: product.pessoas,
+      observation: product.observation, 
+    ));
+    final id2 = jsonDecode(response2.body)['name'];
+    _items.add(Pessoa(
+      id: id,
+      name: product.name,
+      userid:_userId,
+      datas: product.datas,
+      pessoas: product.pessoas,
+      observation: product.observation, 
     ));
     notifyListeners();
   }
@@ -104,14 +128,29 @@ class ProductList with ChangeNotifier {
     if (index >= 0) {
       await http.patch(
         Uri.parse(
-          '${Constants.PRODUCT_BASE_URL}/${product.id}.json?auth=$_token',
+          '${Constants.PRODUCT_BASE_URL}/$_userId/${product.id}.json?auth=$_token',
         ),
         body: jsonEncode(
           {
             "name": product.name,
-            "description": product.description,
-            "price": product.price,
-            "imageUrl": product.imageUrl,
+            "userid":_userId,
+            "dataReserva": product.datas,
+            "pessoas": product.pessoas,
+            "observation": product.observation, 
+          },
+        ),
+      );
+      await http.patch(
+        Uri.parse(
+          '${Constants.SolicitacoesdeReservas}/${product.id}.json?auth=$_token',
+        ),
+        body: jsonEncode(
+          {
+            "name": product.name,
+            "userid":_userId,
+            "dataReserva": product.datas,
+            "pessoas": product.pessoas,
+            "observation": product.observation, 
           },
         ),
       );
@@ -131,11 +170,12 @@ class ProductList with ChangeNotifier {
 
       final response = await http.delete(
         Uri.parse(
-          '${Constants.PRODUCT_BASE_URL}/${product.id}.json?auth=$_token',
+          '${Constants.PRODUCT_BASE_URL}/$_userId/${product.id}.json?auth=$_token',
         ),
       );
+      
 
-      if (response.statusCode >= 400) {
+      if (response.statusCode >= 400 ) {
         _items.insert(index, product);
         notifyListeners();
         throw HttpException(

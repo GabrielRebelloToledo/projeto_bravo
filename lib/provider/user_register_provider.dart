@@ -19,7 +19,7 @@ class UserRegisterProvider with ChangeNotifier {
     this._items = const [],
   ]);
 
-  int get itemsCount{
+  int get itemsCount {
     return _items.length;
   }
 
@@ -65,13 +65,14 @@ class UserRegisterProvider with ChangeNotifier {
           dateEmissao: userData['dateEmissao'],
           ddd: userData['ddd'],
           numbertelephone: userData['numbertelephone'],
-          email: userData['email'], 
-          termos: userData['termos'], 
+          email: userData['email'],
+          termos: userData['termos'],
         ),
       );
     });
     notifyListeners();
   }
+
   Future<void> loadNewUser() async {
     _items.clear();
 
@@ -114,8 +115,8 @@ class UserRegisterProvider with ChangeNotifier {
           dateEmissao: userData['dateEmissao'],
           ddd: userData['ddd'],
           numbertelephone: userData['numbertelephone'],
-          email: userData['email'], 
-          termos: userData['termos'], 
+          email: userData['email'],
+          termos: userData['termos'],
         ),
       );
     });
@@ -146,8 +147,8 @@ class UserRegisterProvider with ChangeNotifier {
       dateEmissao: data['dateEmissao'] as String,
       ddd: data['ddd'] as String,
       numbertelephone: data['numbertelephone'] as String,
-      email: data['email'] as String, 
-      termos: data['termos'] as String, 
+      email: data['email'] as String,
+      termos: data['termos'] as String,
     );
 
     if (hasId) {
@@ -164,7 +165,7 @@ class UserRegisterProvider with ChangeNotifier {
         {
           "name": users.name,
           "sex": users.sex,
-           "birthDay": users.birthDay,
+          "birthDay": users.birthDay,
           "naturalidade": users.naturalidade,
           "escolaridade": users.escolaridade,
           "nameMother": users.nameMother,
@@ -182,36 +183,35 @@ class UserRegisterProvider with ChangeNotifier {
           "ddd": users.ddd,
           "numbertelephone": users.numbertelephone,
           "email": users.email,
-          "termos": users.termos 
+          "termos": users.termos
         },
       ),
     );
 
     final id = jsonDecode(response.body)['name'];
     _items.add(UserRegister(
-      id: id,
-      name: users.name,
-      sex: users.sex,
-       birthDay: users.birthDay,
-      naturalidade: users.naturalidade,
-      escolaridade: users.escolaridade,
-      nameMother: users.nameMother,
-      nameFather: users.nameFather,
-      cep: users.cep,
-      endereco: users.endereco,
-      complemento: users.complemento,
-      bairro: users.bairro,
-      cidade: users.cidade,
-      unidadefederativa: users.unidadefederativa,
-      cpf: users.cpf,
-      identidade: users.identidade,
-      emissor: users.emissor,
-      dateEmissao: users.dateEmissao,
-      ddd: users.ddd,
-      numbertelephone: users.numbertelephone,
-      email: users.email,
-      termos: users.termos
-    ));
+        id: id,
+        name: users.name,
+        sex: users.sex,
+        birthDay: users.birthDay,
+        naturalidade: users.naturalidade,
+        escolaridade: users.escolaridade,
+        nameMother: users.nameMother,
+        nameFather: users.nameFather,
+        cep: users.cep,
+        endereco: users.endereco,
+        complemento: users.complemento,
+        bairro: users.bairro,
+        cidade: users.cidade,
+        unidadefederativa: users.unidadefederativa,
+        cpf: users.cpf,
+        identidade: users.identidade,
+        emissor: users.emissor,
+        dateEmissao: users.dateEmissao,
+        ddd: users.ddd,
+        numbertelephone: users.numbertelephone,
+        email: users.email,
+        termos: users.termos));
     notifyListeners();
   }
 
@@ -227,7 +227,7 @@ class UserRegisterProvider with ChangeNotifier {
           {
             "name": users.name,
             "sex": users.sex,
-             "birthDay": users.birthDay,
+            "birthDay": users.birthDay,
             "naturalidade": users.naturalidade,
             "escolaridade": users.escolaridade,
             "nameMother": users.nameMother,
@@ -244,7 +244,7 @@ class UserRegisterProvider with ChangeNotifier {
             "dateEmissao": users.dateEmissao,
             "ddd": users.ddd,
             "numbertelephone": users.numbertelephone,
-            "email": users.email 
+            "email": users.email
           },
         ),
       );

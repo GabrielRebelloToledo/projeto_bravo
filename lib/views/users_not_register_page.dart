@@ -19,7 +19,7 @@ class UsersNotRegister extends StatelessWidget {
             onPressed: () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed(
-                Routes.authOrHome,
+                Routes.splashScreen,
               );
             },
           ),

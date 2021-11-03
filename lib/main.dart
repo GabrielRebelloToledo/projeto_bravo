@@ -3,6 +3,7 @@ import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/views/auth_or_home_page.dart';
 import 'package:bravo/views/cadastro.dart';
 import 'package:bravo/views/home.dart';
+import 'package:bravo/views/splash_screen.dart';
 import 'package:bravo/views/termos.dart';
 import 'package:bravo/views/user_registration.dart';
 import 'package:bravo/views/users_not_register_page.dart';
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routes: {
             Routes.home: (ctx) => Home(),
-            Routes.authOrHome: (ctx) => AuthOrHomePage(),
+            Routes.splashScreen: (ctx) => SplashScreen(),
             Routes.cadastro: (ctx) => UserRegistration(),
             Routes.cadastroP: (ctx) => ProductFormPage(),
             Routes.usuarios: (ctx) => UsersViews(),

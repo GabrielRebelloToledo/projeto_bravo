@@ -35,7 +35,7 @@ class _UsersViewsState extends State<UsersViews> {
             onPressed: () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed(
-                Routes.authOrHome,
+                Routes.splashScreen,
               );
             },
           ),

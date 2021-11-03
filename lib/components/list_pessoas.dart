@@ -1,7 +1,7 @@
 import 'dart:html';
 import 'dart:io';
+import 'package:bravo/models/auth.dart';
 import 'package:bravo/models/pessoa.dart';
-import 'package:bravo/models/user_register.dart';
 import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +9,15 @@ import 'package:provider/provider.dart';
 
 class ListPessoa extends StatefulWidget {
   final Pessoa pessoa;
-  
-  const ListPessoa({
+ 
+
+  ListPessoa({
     Key? key,
     required this.pessoa,
 
   }) : super(key: key);
 
+  
   @override
   _ListPessoaState createState() => _ListPessoaState();
 }
@@ -24,7 +26,10 @@ class _ListPessoaState extends State<ListPessoa> {
   @override
   Widget build(BuildContext context) {
     final msg = ScaffoldMessenger.of(context);
-    return SingleChildScrollView(
+    
+    return 
+    widget.pessoa.userid != '' ?
+    SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Card(
@@ -38,10 +43,10 @@ class _ListPessoaState extends State<ListPessoa> {
                       style: TextStyle(fontSize: 20),
                     ),
                     subtitle: Text(
-                      'Número de telefone: ' +
-                          widget.pessoa.id +
-                          '\nDecúbito Atual: ' +
-                          widget.pessoa.id,
+                      'Quantidade de pessoas: ' +
+                          widget.pessoa.pessoas.toString() +
+                          '\nData da reserva: ' +
+                          widget.pessoa.datas,
                       style: TextStyle(fontSize: 16),
                     ),
                     isThreeLine: true,
@@ -54,7 +59,7 @@ class _ListPessoaState extends State<ListPessoa> {
                             color: Colors.green,
                             onPressed: () {
                               Navigator.of(context).pushNamed(
-                                Routes.cadastro,
+                                Routes.cadastroP,
                                 arguments: widget.pessoa,
                               );
                             },
@@ -105,6 +110,6 @@ class _ListPessoaState extends State<ListPessoa> {
           ),
         ),
       ),
-    );
+    ):Container();
   }
 }
