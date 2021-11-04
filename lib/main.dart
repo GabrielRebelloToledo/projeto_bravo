@@ -1,7 +1,9 @@
+import 'package:bravo/provider/gerencia.dart';
 import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/views/auth_or_home_page.dart';
 import 'package:bravo/views/cadastro.dart';
+import 'package:bravo/views/gerencia_page.dart';
 import 'package:bravo/views/home.dart';
 import 'package:bravo/views/splash_screen.dart';
 import 'package:bravo/views/termos.dart';
@@ -53,6 +55,17 @@ class MyApp extends StatelessWidget {
             );
           },
         ),
+        ChangeNotifierProxyProvider<Auth, GerenciaList>(
+          create: (context) => GerenciaList(),
+          //Logica para autenticação
+          update: (ctx, auth, previous) {
+            return GerenciaList(
+              auth.token ?? '',
+              auth.userId ?? '',
+              previous?.items ?? [],
+            );
+          },
+        ),
       ],
       child: MaterialApp(
           title: 'Bravo Entregas',
@@ -68,6 +81,7 @@ class MyApp extends StatelessWidget {
             Routes.usuarios: (ctx) => UsersViews(),
             Routes.termos: (ctx) => Termos(),
             Routes.paginaCadastro: (ctx) => UsersNotRegister(),
+            Routes.gerenciaList: (ctx) => PageGerencia(),
           }),
     );
   }

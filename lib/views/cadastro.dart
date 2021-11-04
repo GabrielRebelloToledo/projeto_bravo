@@ -15,6 +15,9 @@ class ProductFormPage extends StatefulWidget {
 class _ProductFormPageState extends State<ProductFormPage> {
   final _priceFocus = FocusNode();
   final _descriptionFocus = FocusNode();
+  final _pessoasFocus = FocusNode();
+  final _ObsFocus = FocusNode();
+  final _contato = FocusNode();
 
   final _imageUrlFocus = FocusNode();
   final _imageUrlController = TextEditingController();
@@ -43,6 +46,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         _formData['name'] = product.name;
         _formData['dataReserva'] = product.datas;
         _formData['pessoas'] = product.pessoas;
+        _formData['contato'] = product.contato;
         /* _formData['imageUrl'] = product.imageUrl;
 
         _imageUrlController.text = product.imageUrl; */
@@ -55,6 +59,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
     super.dispose();
     _priceFocus.dispose();
     _descriptionFocus.dispose();
+    _contato.dispose();
+    _ObsFocus.dispose();
+    _pessoasFocus.dispose();
 
     /* _imageUrlFocus.removeListener(updateImage);
     _imageUrlFocus.dispose(); */
@@ -134,8 +141,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     TextFormField(
                       initialValue: _formData['name']?.toString(),
                       decoration: InputDecoration(
-                        labelText: 'Nome',
-                      ),
+                          labelText: 'Nome: ',
+                          hintText: 'Informe aqui seu nome completo'),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_priceFocus);
@@ -157,8 +164,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     ),
                     TextFormField(
                       initialValue: _formData['dataReserva']?.toString(),
-                      decoration:
-                          InputDecoration(labelText: 'Data da reserva: '),
+                      decoration: InputDecoration(
+                          labelText: 'Data da reserva: ',
+                          hintText: 'Informe uma data para sua reserva'),
                       focusNode: _descriptionFocus,
                       keyboardType: TextInputType.multiline,
                       onSaved: (dataReserva) =>
@@ -167,11 +175,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
                         final datas = _datas ?? '';
 
                         if (datas.trim().isEmpty) {
-                          return 'Descrição é obrigatória.';
+                          return 'Data é obrigatória.';
                         }
 
                         if (datas.trim().length < 10) {
-                          return 'Descrição precisa no mínimo de 10 letras.';
+                          return 'Data precisa no mínimo de 8 números e conter "/".';
                         }
 
                         return null;
@@ -179,15 +187,16 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     ),
                     TextFormField(
                       initialValue: _formData['pessoas']?.toString(),
-                      decoration:
-                          InputDecoration(labelText: 'Quantidade de pessoas:'),
+                      decoration: InputDecoration(
+                        labelText: 'Quantidade de pessoas:',
+                      ),
                       textInputAction: TextInputAction.next,
                       focusNode: _priceFocus,
                       keyboardType: TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                       onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_descriptionFocus);
+                        FocusScope.of(context).requestFocus(_pessoasFocus);
                       },
                       onSaved: (pessoas) =>
                           _formData['pessoas'] = double.parse(pessoas ?? '0'),
@@ -208,16 +217,31 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           labelText: 'Observação:',
                           hintText: 'A observação é opcional!'),
                       textInputAction: TextInputAction.next,
-                      focusNode: _priceFocus,
+                      focusNode: _ObsFocus,
                       keyboardType: TextInputType.numberWithOptions(
                         decimal: true,
                       ),
                       onFieldSubmitted: (_) {
-                        FocusScope.of(context).requestFocus(_descriptionFocus);
+                        FocusScope.of(context).requestFocus(_ObsFocus);
                       },
                       onSaved: (observation) =>
                           _formData['observation'] = observation ?? '',
-                      
+                    ),
+                    TextFormField(
+                      initialValue: _formData['contato']?.toString(),
+                      decoration: InputDecoration(
+                          labelText: 'Telefone para contato:',
+                          hintText: 'Informe aqui um telefone para contato'),
+                      textInputAction: TextInputAction.next,
+                      focusNode: _contato,
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_contato);
+                      },
+                      onSaved: (contato) =>
+                          _formData['contato'] = contato ?? '',
                     ),
                     SizedBox(
                       height: 15.0,
@@ -274,9 +298,21 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               Clipboard.setData(data);
                               ClipboardStatus.pasteable.toString();
                             },
-                            child: Text('Clique para copiar'))
+                            child: Text(
+                              'Clique aqui para copiar',
+                              style: TextStyle(color: Colors.red),
+                            ))
                       ],
                     ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushReplacementNamed(Routes.home);
+                        },
+                        child: Icon(Icons.arrow_back))
                   ],
                 ),
               ),

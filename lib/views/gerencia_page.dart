@@ -1,19 +1,19 @@
 import 'package:bravo/components/app_drawer.dart';
-import 'package:bravo/components/list_pessoas.dart';
+import 'package:bravo/components/lis_gerencia.dart';
 import 'package:bravo/models/auth.dart';
-import 'package:bravo/provider/pessoas.dart';
+import 'package:bravo/provider/gerencia.dart';
 import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class PageGerencia extends StatefulWidget {
+  const PageGerencia({Key? key}) : super(key: key);
 
   @override
-  _HomeState createState() => _HomeState();
+  _PageGerenciaState createState() => _PageGerenciaState();
 }
 
-class _HomeState extends State<Home> {
+class _PageGerenciaState extends State<PageGerencia> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,15 +40,10 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).pushNamed(Routes.cadastro);
-        },
-      ),
       drawer: AppDrawer(),
       body: FutureBuilder(
-        future: Provider.of<ProductList>(context, listen: false).loadProducts(),
+        future:
+            Provider.of<GerenciaList>(context, listen: false).loadProducts(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -57,10 +52,10 @@ class _HomeState extends State<Home> {
               child: Text('Ocorreu um erro!'),
             );
           } else {
-            return Consumer<ProductList>(
+            return Consumer<GerenciaList>(
               builder: (ctx, orders, child) => ListView.builder(
                   itemCount: orders.itemsCount,
-                  itemBuilder: (ctx, i) => ListPessoa(
+                  itemBuilder: (ctx, i) => ListGerencia(
                         pessoa: orders.items[i],
                       )),
             );

@@ -12,16 +12,21 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text(''),
+            accountName: Text(
+              'Seja Bem Vindo!',
+              style: TextStyle(fontSize: 19),
+            ),
             accountEmail: Text(''),
-            currentAccountPicture: FlutterLogo(
-              textColor: Colors.red,
+            currentAccountPicture: Image.asset(
+              "lib/assets/imagens/logo.jpeg",
+              width: 250,
+              height: 300,
             ),
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.shop),
-            title: Text('Novas Solicitações'),
+            leading: Icon(Icons.list_alt_outlined),
+            title: Text('Suas Reservas'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(
                 Routes.home,
@@ -30,21 +35,21 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.payment),
-            title: Text('Cadastro Entregador'),
+            leading: Icon(Icons.assignment_ind_outlined),
+            title: Text('Cadastra reserva'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(
-                Routes.paginaCadastro,
+                Routes.cadastroP,
               );
             },
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Seu Perfil'),
+            leading: Icon(Icons.paste),
+            title: Text('Gerênciar Reservas'),
             onTap: () {
               Navigator.of(context).pushReplacementNamed(
-                Routes.usuarios,
+                Routes.gerenciaList,
               );
             },
           ),

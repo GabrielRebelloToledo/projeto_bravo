@@ -6,14 +6,14 @@ import 'package:bravo/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class ProductList with ChangeNotifier {
+class GerenciaList with ChangeNotifier {
   final String _token;
   final String _userId;
   List<Pessoa> _items = [];
 
   List<Pessoa> get items => [..._items];
 
-  ProductList([
+  GerenciaList([
     this._token = '',
     this._userId = '',
     this._items = const [],
@@ -27,7 +27,7 @@ class ProductList with ChangeNotifier {
     _items.clear();
 
     final response = await http.get(
-      Uri.parse('${Constants.PRODUCT_BASE_URL}/$_userId.json?auth=$_token'),
+      Uri.parse('${Constants.SolicitacoesdeReservas}.json?auth=$_token'),
     );
     if (response.body == 'null') return;
     final favResponse = await http.get(
@@ -79,19 +79,6 @@ class ProductList with ChangeNotifier {
 
   Future<void> addProduct(Pessoa product) async {
     final response = await http.post(
-      Uri.parse('${Constants.PRODUCT_BASE_URL}/$_userId.json?auth=$_token'),
-      body: jsonEncode(
-        {
-          "name": product.name,
-          "userid": _userId,
-          "dataReserva": product.datas,
-          "pessoas": product.pessoas,
-          "observation": product.observation,
-          "contato": product.contato,
-        },
-      ),
-    );
-    final response2 = await http.post(
       Uri.parse('${Constants.SolicitacoesdeReservas}.json?auth=$_token'),
       body: jsonEncode(
         {
@@ -115,16 +102,7 @@ class ProductList with ChangeNotifier {
       observation: product.observation,
       contato: product.contato,
     ));
-    final id2 = jsonDecode(response2.body)['name'];
-    _items.add(Pessoa(
-      id: id,
-      name: product.name,
-      userid: _userId,
-      datas: product.datas,
-      pessoas: product.pessoas,
-      observation: product.observation,
-      contato: product.contato,
-    ));
+
     notifyListeners();
   }
 
@@ -132,21 +110,6 @@ class ProductList with ChangeNotifier {
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
-      await http.patch(
-        Uri.parse(
-          '${Constants.PRODUCT_BASE_URL}/$_userId/${product.id}.json?auth=$_token',
-        ),
-        body: jsonEncode(
-          {
-            "name": product.name,
-            "userid": _userId,
-            "dataReserva": product.datas,
-            "pessoas": product.pessoas,
-            "observation": product.observation,
-            "contato": product.contato,
-          },
-        ),
-      );
       await http.patch(
         Uri.parse(
           '${Constants.SolicitacoesdeReservas}/${product.id}.json?auth=$_token',
@@ -178,7 +141,7 @@ class ProductList with ChangeNotifier {
 
       final response = await http.delete(
         Uri.parse(
-          '${Constants.PRODUCT_BASE_URL}/$_userId/${product.id}.json?auth=$_token',
+          '${Constants.SolicitacoesdeReservas}/${product.id}.json?auth=$_token',
         ),
       );
 
