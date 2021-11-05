@@ -51,7 +51,7 @@ class _ListPessoaState extends State<ListPessoa> {
                               padding: EdgeInsets.only(left: 3),
                               width: 130,
                               child: Row(children: [
-                                IconButton(
+                                /* IconButton(
                                   icon: Icon(Icons.edit),
                                   color: Colors.green,
                                   onPressed: () {
@@ -60,10 +60,9 @@ class _ListPessoaState extends State<ListPessoa> {
                                       arguments: widget.pessoa,
                                     );
                                   },
-                                ),
-                                /*  IconButton(
-                            icon: Icon(Icons.delete),
-                            color: Theme.of(context).errorColor,
+                                ), */
+                              ElevatedButton(
+                            child: Text('Concluir?'),
                             onPressed: () {
                               showDialog<bool>(
                                 context: context,
@@ -89,7 +88,7 @@ class _ListPessoaState extends State<ListPessoa> {
                                     await Provider.of<ProductList>(
                                       context,
                                       listen: false,
-                                    ).removeProduct(widget.pessoa);
+                                    ).concluido(widget.pessoa);
                                   } on HttpException catch (error) {
                                     msg.showSnackBar(
                                       SnackBar(
@@ -100,7 +99,7 @@ class _ListPessoaState extends State<ListPessoa> {
                                 }
                               });
                             },
-                          ), */
+                          ), 
                               ]))),
                     ),
                   ],

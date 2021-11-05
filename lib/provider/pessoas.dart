@@ -10,9 +10,11 @@ class ProductList with ChangeNotifier {
   final String _token;
   final String _userId;
   List<Pessoa> _items = [];
-  
+final String pagamentof= "Em Análise!";
+final String concluidor = "Aguardando!";
+final String concluidors = "OK!";
   List<Pessoa> get items => [..._items];
-  
+
   ProductList([
     this._token = '',
     this._userId = '',
@@ -51,7 +53,8 @@ class ProductList with ChangeNotifier {
           pessoas: productData['pessoas'],
           observation: productData['observation'],
           contato: productData['contato'],
-          
+          pagamento: productData['pagamento'],
+          concluido: productData['concluido'],
         ),
       );
     });
@@ -69,7 +72,8 @@ class ProductList with ChangeNotifier {
       pessoas: data['pessoas'] as double,
       observation: data['observation'] as String,
       contato: data['contato'] as String,
-      
+      pagamento: data['pagamento'] as String,
+      concluido: data['concluido'] as String,
     );
 
     if (hasId) {
@@ -90,21 +94,8 @@ class ProductList with ChangeNotifier {
           "pessoas": product.pessoas,
           "observation": product.observation,
           "contato": product.contato,
-          
-        },
-      ),
-    );
-    final response2 = await http.post(
-      Uri.parse('${Constants.SolicitacoesdeReservas}.json?auth=$_token'),
-      body: jsonEncode(
-        {
-          "name": product.name,
-          "userid": _userId,
-          "dataReserva": product.datas,
-          "pessoas": product.pessoas,
-          "observation": product.observation,
-          "contato": product.contato,
-         
+          "pagamento": pagamentof,
+          "concluido": concluidor,
         },
       ),
     );
@@ -118,22 +109,13 @@ class ProductList with ChangeNotifier {
       pessoas: product.pessoas,
       observation: product.observation,
       contato: product.contato,
-      
+      pagamento: pagamentof,
+      concluido:  concluidor,
     ));
-    final id2 = jsonDecode(response2.body)['name'];
-    _items.add(Pessoa(
-      id: product.id,
-      name: product.name,
-      userid: _userId,
-      datas: product.datas,
-      pessoas: product.pessoas,
-      observation: product.observation,
-      contato: product.contato,
-   
-    ));
+
     notifyListeners();
   }
-  
+
   Future<void> updateProduct(Pessoa product) async {
     int index = _items.indexWhere((p) => p.id == product.id);
 
@@ -150,7 +132,8 @@ class ProductList with ChangeNotifier {
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            
+            "pagamento": pagamentof,
+            "concluido": concluidor,
           },
         ),
       );
@@ -166,7 +149,52 @@ class ProductList with ChangeNotifier {
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            
+            "pagamento": pagamentof,
+            "concluido": concluidor,
+          },
+        ),
+      );
+
+      _items[index] = product;
+      notifyListeners();
+    }
+  }
+
+  Future<void> concluido(Pessoa product) async {
+    int index = _items.indexWhere((p) => p.id == product.id);
+
+    if (index >= 0) {
+      await http.patch(
+        Uri.parse(
+          '${Constants.PRODUCT_BASE_URL}/$_userId/${product.id}.json?auth=$_token',
+        ),
+        body: jsonEncode(
+          {
+            "name": product.name,
+            "userid": _userId,
+            "dataReserva": product.datas,
+            "pessoas": product.pessoas,
+            "observation": product.observation,
+            "contato": product.contato,
+            "pagamento": pagamentof,
+            "concluido": concluidors,
+          },
+        ),
+      );
+      await http.patch(
+        Uri.parse(
+          '${Constants.SolicitacoesdeReservas}/${product.id}.json?auth=$_token',
+        ),
+        body: jsonEncode(
+          {
+            "name": product.name,
+            "userid": _userId,
+            "dataReserva": product.datas,
+            "pessoas": product.pessoas,
+            "observation": product.observation,
+            "contato": product.contato,
+            "pagamento": pagamentof,
+            "concluido": concluidors,
           },
         ),
       );
@@ -189,7 +217,6 @@ class ProductList with ChangeNotifier {
           '${Constants.PRODUCT_BASE_URL}/$_userId/${product.id}.json?auth=$_token',
         ),
       );
-
       if (response.statusCode >= 400) {
         _items.insert(index, product);
         notifyListeners();

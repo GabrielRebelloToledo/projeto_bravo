@@ -6,6 +6,8 @@ class Pessoa {
   final double pessoas;
   final String observation;
   final String contato;
+  final String pagamento;
+  final String concluido;
  
 
   const Pessoa({
@@ -16,6 +18,8 @@ class Pessoa {
     required this.pessoas,
     required this.observation,
     required this.contato,
+    required this.pagamento,
+    required this.concluido,
     
   });
 }

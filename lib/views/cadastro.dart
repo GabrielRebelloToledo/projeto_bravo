@@ -48,6 +48,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
         _formData['pessoas'] = product.pessoas;
         _formData['observation'] = product.observation;
         _formData['contato'] = product.contato;
+        _formData['pagamento'] = product.pagamento;
+        _formData['concluido'] = product.concluido;
        
         /* _formData['imageUrl'] = product.imageUrl;
 
@@ -245,6 +247,25 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       onSaved: (contato) =>
                           _formData['contato'] = contato ?? '',
                     ),
+                    TextFormField(
+                      readOnly: true,
+                      initialValue: _formData['pagamento']?.toString(),
+                      decoration: InputDecoration(
+                          labelText: 'Situação de Pagamento:',
+                          hintText: 'Pagamento em Análise!'),
+                      onSaved: (pagamento) =>
+                          _formData['pagamento'] = pagamento ?? '',
+                    ),
+                    TextFormField(
+                      readOnly: true,
+                      initialValue: _formData['concluido']?.toString(),
+                      decoration: InputDecoration(
+                          labelText: 'Situação da reserva:',
+                          hintText: 'Aguardando!'),
+                      onSaved: (concluido) =>
+                          _formData['concluido'] = concluido ?? '',
+                    ),
+                    
                     
                     SizedBox(
                       height: 15.0,
