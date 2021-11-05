@@ -1,6 +1,9 @@
 import 'package:bravo/exceptions/http_exception.dart';
 import 'package:bravo/models/pessoa.dart';
+
+
 import 'package:bravo/provider/gerencia.dart';
+import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +21,8 @@ class _ListGerenciaState extends State<ListGerencia> {
   Widget build(BuildContext context) {
     final msg = ScaffoldMessenger.of(context);
 
-    return widget.pessoa.userid != ''
-        ? SingleChildScrollView(
+    return 
+         SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Card(
@@ -45,6 +48,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                           width: 130,
                           child: Row(
                             children: [
+                             
                               IconButton(
                                 icon: Icon(Icons.edit),
                                 color: Colors.green,
@@ -97,6 +101,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                                   );
                                 },
                               ),
+                              
                             ],
                           ),
                         ),
@@ -106,7 +111,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                 ),
               ),
             ),
-          )
-        : Container();
+          );
+        
   }
 }

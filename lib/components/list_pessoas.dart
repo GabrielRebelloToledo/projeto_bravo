@@ -42,7 +42,8 @@ class _ListPessoaState extends State<ListPessoa> {
                             'Quantidade de pessoas: ' +
                                 widget.pessoa.pessoas.toString() +
                                 '\nData da reserva: ' +
-                                widget.pessoa.datas,
+                                widget.pessoa.datas 
+                                ,
                             style: TextStyle(fontSize: 16),
                           ),
                           isThreeLine: true,

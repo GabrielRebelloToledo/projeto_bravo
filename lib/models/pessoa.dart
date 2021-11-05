@@ -6,6 +6,7 @@ class Pessoa {
   final double pessoas;
   final String observation;
   final String contato;
+ 
 
   const Pessoa({
     required this.id,
@@ -15,5 +16,6 @@ class Pessoa {
     required this.pessoas,
     required this.observation,
     required this.contato,
+    
   });
 }

@@ -10,9 +10,9 @@ class ProductList with ChangeNotifier {
   final String _token;
   final String _userId;
   List<Pessoa> _items = [];
-
+  
   List<Pessoa> get items => [..._items];
-
+  
   ProductList([
     this._token = '',
     this._userId = '',
@@ -51,6 +51,7 @@ class ProductList with ChangeNotifier {
           pessoas: productData['pessoas'],
           observation: productData['observation'],
           contato: productData['contato'],
+          
         ),
       );
     });
@@ -68,6 +69,7 @@ class ProductList with ChangeNotifier {
       pessoas: data['pessoas'] as double,
       observation: data['observation'] as String,
       contato: data['contato'] as String,
+      
     );
 
     if (hasId) {
@@ -88,6 +90,7 @@ class ProductList with ChangeNotifier {
           "pessoas": product.pessoas,
           "observation": product.observation,
           "contato": product.contato,
+          
         },
       ),
     );
@@ -101,6 +104,7 @@ class ProductList with ChangeNotifier {
           "pessoas": product.pessoas,
           "observation": product.observation,
           "contato": product.contato,
+         
         },
       ),
     );
@@ -114,20 +118,22 @@ class ProductList with ChangeNotifier {
       pessoas: product.pessoas,
       observation: product.observation,
       contato: product.contato,
+      
     ));
     final id2 = jsonDecode(response2.body)['name'];
     _items.add(Pessoa(
-      id: id,
+      id: product.id,
       name: product.name,
       userid: _userId,
       datas: product.datas,
       pessoas: product.pessoas,
       observation: product.observation,
       contato: product.contato,
+   
     ));
     notifyListeners();
   }
-
+  
   Future<void> updateProduct(Pessoa product) async {
     int index = _items.indexWhere((p) => p.id == product.id);
 
@@ -144,6 +150,7 @@ class ProductList with ChangeNotifier {
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
+            
           },
         ),
       );
@@ -159,6 +166,7 @@ class ProductList with ChangeNotifier {
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
+            
           },
         ),
       );

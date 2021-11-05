@@ -59,6 +59,7 @@ class _HomeState extends State<Home> {
           } else {
             return Consumer<ProductList>(
               builder: (ctx, orders, child) => ListView.builder(
+                reverse:true,
                   itemCount: orders.itemsCount,
                   itemBuilder: (ctx, i) => ListPessoa(
                         pessoa: orders.items[i],

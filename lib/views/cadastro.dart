@@ -26,7 +26,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   final _formData = Map<String, Object>();
 
   bool _isLoading = false;
-
+  final String pagamentof= "Em Análise!";
   /* @override
   void initState() {
     super.initState();
@@ -46,7 +46,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
         _formData['name'] = product.name;
         _formData['dataReserva'] = product.datas;
         _formData['pessoas'] = product.pessoas;
+        _formData['observation'] = product.observation;
         _formData['contato'] = product.contato;
+       
         /* _formData['imageUrl'] = product.imageUrl;
 
         _imageUrlController.text = product.imageUrl; */
@@ -178,7 +180,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           return 'Data é obrigatória.';
                         }
 
-                        if (datas.trim().length < 10) {
+                        if (datas.trim().length == 9) {
                           return 'Data precisa no mínimo de 8 números e conter "/".';
                         }
 
@@ -243,6 +245,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       onSaved: (contato) =>
                           _formData['contato'] = contato ?? '',
                     ),
+                    
                     SizedBox(
                       height: 15.0,
                     ),

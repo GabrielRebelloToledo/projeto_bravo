@@ -54,6 +54,7 @@ class _PageGerenciaState extends State<PageGerencia> {
           } else {
             return Consumer<GerenciaList>(
               builder: (ctx, orders, child) => ListView.builder(
+                
                   itemCount: orders.itemsCount,
                   itemBuilder: (ctx, i) => ListGerencia(
                         pessoa: orders.items[i],

@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:html';
 import 'dart:math';
 import 'package:bravo/exceptions/http_exception.dart';
 import 'package:bravo/models/pessoa.dart';
+
+
 import 'package:bravo/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -51,6 +54,7 @@ class GerenciaList with ChangeNotifier {
           pessoas: productData['pessoas'],
           observation: productData['observation'],
           contato: productData['contato'],
+         
         ),
       );
     });
@@ -68,6 +72,7 @@ class GerenciaList with ChangeNotifier {
       pessoas: data['pessoas'] as double,
       observation: data['observation'] as String,
       contato: data['contato'] as String,
+      
     );
 
     if (hasId) {
@@ -88,6 +93,7 @@ class GerenciaList with ChangeNotifier {
           "pessoas": product.pessoas,
           "observation": product.observation,
           "contato": product.contato,
+          
         },
       ),
     );
@@ -101,14 +107,16 @@ class GerenciaList with ChangeNotifier {
       pessoas: product.pessoas,
       observation: product.observation,
       contato: product.contato,
+     
     ));
 
     notifyListeners();
   }
 
+  
   Future<void> updateProduct(Pessoa product) async {
-    int index = _items.indexWhere((p) => p.id == product.id);
-
+    int index = _items.indexWhere((p) => p.id != product.id);
+    
     if (index >= 0) {
       await http.patch(
         Uri.parse(
@@ -122,6 +130,7 @@ class GerenciaList with ChangeNotifier {
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
+            
           },
         ),
       );
