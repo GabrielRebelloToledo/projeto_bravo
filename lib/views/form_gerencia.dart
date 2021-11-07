@@ -1,19 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:bravo/models/pessoa.dart';
 import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/routes/routes.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class ProductFormPage extends StatefulWidget {
-  const ProductFormPage({Key? key}) : super(key: key);
+class FormGerencia extends StatefulWidget {
+  const FormGerencia({ Key? key }) : super(key: key);
 
   @override
-  _ProductFormPageState createState() => _ProductFormPageState();
+  _FormGerenciaState createState() => _FormGerenciaState();
 }
 
-class _ProductFormPageState extends State<ProductFormPage> {
-  final _priceFocus = FocusNode();
+class _FormGerenciaState extends State<FormGerencia> {
+   final _priceFocus = FocusNode();
   final _descriptionFocus = FocusNode();
   final _pessoasFocus = FocusNode();
   final _ObsFocus = FocusNode();
@@ -67,22 +67,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _ObsFocus.dispose();
     _pessoasFocus.dispose();
 
-    /* _imageUrlFocus.removeListener(updateImage);
-    _imageUrlFocus.dispose(); */
+  
   }
 
-  /* void updateImage() {
-    setState(() {});
-  } */
-
-  /* bool isValidImageUrl(String url) {
-    bool isValidUrl = Uri.tryParse(url)?.hasAbsolutePath ?? false;
-    bool endsWithFile = url.toLowerCase().endsWith('.png') ||
-        url.toLowerCase().endsWith('.jpg') ||
-        url.toLowerCase().endsWith('.jpeg');
-    return isValidUrl && endsWithFile;
-  } */
-
+  
   Future<void> _submitForm() async {
     final isValid = _formKey.currentState?.validate() ?? false;
 
@@ -124,7 +112,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Formulário da Reserva do Usuário'),
+        title: Text('Formulário da Reserva'),
         actions: [
           IconButton(
             onPressed: _submitForm,
@@ -248,11 +236,19 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           _formData['contato'] = contato ?? '',
                     ),
                     TextFormField(
-                      readOnly: true,
+                      
                       initialValue: _formData['pagamento']?.toString(),
                       decoration: InputDecoration(
-                          labelText: 'Situação de Pagamento:',
-                          hintText: 'Pagamento em Análise!'),
+                          labelText: 'pagamento:',
+                          hintText: 'pagamento'),
+                      textInputAction: TextInputAction.next,
+                      
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_ObsFocus);
+                      },
                       onSaved: (pagamento) =>
                           _formData['pagamento'] = pagamento ?? '',
                     ),
@@ -267,67 +263,6 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     ),
                     
                     
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.yellow),
-                      padding: EdgeInsets.all(14),
-                      child: Text(
-                        'Caro cliente, pedimos um pagamento antecipado de R\$20,00 para que a reserva seja feita, o valor será sera abatido no valor final da conta. Para mais informações clique na aba sobre!',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.yellow),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      'Faça sua reserva pelo PIX: 21.221.123/0009-34',
-                                      style: TextStyle(
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.035),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              final data =
-                                  ClipboardData(text: '21.221.123/0009-34');
-                              Clipboard.setData(data);
-                              ClipboardStatus.pasteable.toString();
-                            },
-                            child: Text(
-                              'Clique aqui para copiar',
-                              style: TextStyle(color: Colors.red),
-                            ))
-                      ],
-                    ),
                     SizedBox(
                       height: 20.0,
                     ),

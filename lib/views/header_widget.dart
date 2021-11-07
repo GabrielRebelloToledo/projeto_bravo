@@ -123,7 +123,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     border: Border.all(width: 5, color: Colors.transparent),
                   ),
                   child: Image.asset(
-                      "lib/assets/imagens/logo.jpeg",
+                      "lib/assets/imagens/logo.png",
                   
                   ),
                 ),

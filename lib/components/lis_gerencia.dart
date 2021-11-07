@@ -72,7 +72,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                         color: Colors.green,
                         onPressed: () {
                           Navigator.of(context).pushNamed(
-                            Routes.cadastroP,
+                            Routes.formGerencia,
                             arguments: widget.pessoa,
                           );
                         },
@@ -117,7 +117,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                           );
                         },
                       ),
-                      IconButton(
+                      /* IconButton(
                         icon: Icon(Icons.attach_money),
                         color: Colors.green,
                         onPressed: () {
@@ -196,7 +196,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                             },
                           );
                         },
-                      ),
+                      ), */
                     ],
                   ),
                 ),

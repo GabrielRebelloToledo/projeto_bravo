@@ -18,13 +18,13 @@ class AppDrawer extends StatelessWidget {
             ),
             accountEmail: Text(''),
             currentAccountPicture: Image.asset(
-              "lib/assets/imagens/logo.jpeg",
+              "lib/assets/imagens/logo.png",
               width: 250,
               height: 300,
             ),
           ),
           Divider(),
-          ListTile(
+          /* ListTile(
             leading: Icon(Icons.list_alt_outlined),
             title: Text('Suas Reservas'),
             onTap: () {
@@ -42,8 +42,8 @@ class AppDrawer extends StatelessWidget {
                 Routes.cadastroP,
               );
             },
-          ),
-          Divider(),
+          ), */
+          /* Divider(), */
           ListTile(
             leading: Icon(Icons.paste),
             title: Text('Gerênciar Reservas'),

@@ -3,7 +3,6 @@ import 'package:bravo/components/list_users.dart';
 import 'package:bravo/models/auth.dart';
 import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/routes/routes.dart';
-import 'package:bravo/views/users_not_register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

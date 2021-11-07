@@ -18,23 +18,23 @@ class _PageGerenciaState extends State<PageGerencia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Suas Reservas:'),
+        title: const Text('Reservas Solicitadas:'),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(
+          /* IconButton(
             onPressed: () {
               Navigator.of(context).pushReplacementNamed(
                 Routes.cadastroP,
               );
             },
             icon: const Icon(Icons.add),
-          ),
+          ), */
           IconButton(
             icon: const Icon(Icons.exit_to_app),
             onPressed: () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed(
-                Routes.home,
+                Routes.splashScreen,
               );
             },
           ),

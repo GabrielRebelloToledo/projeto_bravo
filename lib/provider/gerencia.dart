@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:html';
 import 'dart:math';
 import 'package:bravo/exceptions/http_exception.dart';
 import 'package:bravo/models/pessoa.dart';
-
 
 import 'package:bravo/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +10,7 @@ import 'package:http/http.dart' as http;
 class GerenciaList with ChangeNotifier {
   final String _token;
   final String _userId;
-  final String pago = 'Pago!';
-  final String nPago = 'Não Pago!';
+
   final String concluidors = "OK!";
   List<Pessoa> _items = [];
 
@@ -50,7 +47,7 @@ class GerenciaList with ChangeNotifier {
       final isFavorite = favData[productId] ?? false;
       _items.add(
         Pessoa(
-          id: productId,
+            id: productId,
           name: productData['name'],
           userid: _userId,
           datas: productData['dataReserva'],
@@ -58,8 +55,7 @@ class GerenciaList with ChangeNotifier {
           observation: productData['observation'],
           contato: productData['contato'],
           pagamento: productData['pagamento'],
-          concluido: productData ['concluido']
-        ),
+          concluido: productData['concluido'],)
       );
     });
     notifyListeners();
@@ -78,7 +74,6 @@ class GerenciaList with ChangeNotifier {
       contato: data['contato'] as String,
       pagamento: data['pagamento'] as String,
       concluido: data['concluido'] as String,
-      
     );
 
     if (hasId) {
@@ -93,14 +88,14 @@ class GerenciaList with ChangeNotifier {
       Uri.parse('${Constants.SolicitacoesdeReservas}.json?auth=$_token'),
       body: jsonEncode(
         {
-          "name": product.name,
+         "name": product.name,
           "userid": _userId,
           "dataReserva": product.datas,
           "pessoas": product.pessoas,
           "observation": product.observation,
           "contato": product.contato,
           "pagamento": product.pagamento,
-          "concluido": product.concluido,
+          "concluido": 'OK!',
         },
       ),
     );
@@ -114,45 +109,16 @@ class GerenciaList with ChangeNotifier {
       pessoas: product.pessoas,
       observation: product.observation,
       contato: product.contato,
-      pagamento: product.pagamento,
-      concluido: product.concluido,
-     
+      pagamento: 'product.contato',
+      concluido: 'OK!',
     ));
 
     notifyListeners();
   }
 
-  
   Future<void> updateProduct(Pessoa product) async {
     int index = _items.indexWhere((p) => p.id != product.id);
-    
-    if (index >= 0) {
-      await http.patch(
-        Uri.parse(
-          '${Constants.SolicitacoesdeReservas}/${product.id}.json?auth=$_token',
-        ),
-        body: jsonEncode(
-          {
-            "name": product.name,
-            "userid": _userId,
-            "dataReserva": product.datas,
-            "pessoas": product.pessoas,
-            "observation": product.observation,
-            "contato": product.contato,
-            "pagamento": 'pago',
-            "concluido": 'concluidors',
-            
-          },
-        ),
-      );
 
-      _items[index] = product;
-      notifyListeners();
-    }
-  }
-  Future<void> pagoProduct(Pessoa product) async {
-    int index = _items.indexWhere((p) => p.id != product.id);
-    
     if (index >= 0) {
       await http.patch(
         Uri.parse(
@@ -160,40 +126,14 @@ class GerenciaList with ChangeNotifier {
         ),
         body: jsonEncode(
           {
-            "name": product.name,
+           "name": product.name,
             "userid": _userId,
             "dataReserva": product.datas,
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            "pagamento": 'pago',
-            "concluido": 'concluidors',
-          },
-        ),
-      );
-
-      _items[index] = product;
-      notifyListeners();
-    }
-  }
-  Future<void> naoPagoProduct(Pessoa product) async {
-    int index = _items.indexWhere((p) => p.id != product.id);
-    
-    if (index >= 0) {
-      await http.patch(
-        Uri.parse(
-          '${Constants.SolicitacoesdeReservas}/${product.id}.json?auth=$_token',
-        ),
-        body: jsonEncode(
-          {
-            "name": product.name,
-            "userid": _userId,
-            "dataReserva": product.datas,
-            "pessoas": product.pessoas,
-            "observation": product.observation,
-            "contato": product.contato,
-            "pagamento": pago,
-            "concluido": concluidors,
+            "pagamento": product.pagamento,
+            "concluido": 'OK!',
           },
         ),
       );

@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
             onPressed: () {
               Provider.of<Auth>(context, listen: false).logout();
               Navigator.of(context).pushReplacementNamed(
-                Routes.home,
+                Routes.splashScreen,
               );
             },
           ),
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).pushNamed(Routes.cadastro);
+          Navigator.of(context).pushNamed(Routes.cadastroP);
         },
       ),
       drawer: AppDrawer(),
@@ -59,7 +59,6 @@ class _HomeState extends State<Home> {
           } else {
             return Consumer<ProductList>(
               builder: (ctx, orders, child) => ListView.builder(
-                reverse:true,
                   itemCount: orders.itemsCount,
                   itemBuilder: (ctx, i) => ListPessoa(
                         pessoa: orders.items[i],

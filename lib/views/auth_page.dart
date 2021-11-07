@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bravo/components/auth_form.dart';
 import 'package:bravo/views/header_widget.dart';
 import 'package:flutter/material.dart';

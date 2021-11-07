@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:bravo/views/auth_or_home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Center(
               child: ClipOval(
                 child: Image.asset(
-                      "lib/assets/imagens/logo.jpeg",
+                      "lib/assets/imagens/logo.png",
                     width: 250,
                     height: 300,
                   ),
@@ -69,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.redAccent.withOpacity(1),
+                color: Colors.blue.withOpacity(1), 
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withOpacity(0.3),

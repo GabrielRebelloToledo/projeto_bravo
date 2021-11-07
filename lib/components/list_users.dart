@@ -1,10 +1,7 @@
-import 'package:bravo/exceptions/http_exception.dart';
 import 'package:bravo/models/user_register.dart';
-import 'package:bravo/provider/user_register_provider.dart';
 import 'package:bravo/routes/routes.dart';
-import 'package:bravo/views/user_registration.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 
 class ListUsers extends StatefulWidget {
   final UserRegister users;

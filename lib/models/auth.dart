@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:bravo/data/store.dart';
 import 'package:bravo/exceptions/auth_exception.dart';
 import 'package:http/http.dart' as http;

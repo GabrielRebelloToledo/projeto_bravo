@@ -132,10 +132,11 @@ final String concluidors = "OK!";
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            "pagamento": pagamentof,
-            "concluido": concluidor,
+            "pagamento": product.pagamento,
+            "concluido": 'OK!',
           },
         ),
+        
       );
       await http.patch(
         Uri.parse(
@@ -149,8 +150,8 @@ final String concluidors = "OK!";
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            "pagamento": pagamentof,
-            "concluido": concluidor,
+            "pagamento": product.pagamento,
+            "concluido": 'OK!',
           },
         ),
       );
@@ -176,7 +177,7 @@ final String concluidors = "OK!";
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            "pagamento": pagamentof,
+            "pagamento": product.pagamento,
             "concluido": concluidors,
           },
         ),
@@ -193,7 +194,7 @@ final String concluidors = "OK!";
             "pessoas": product.pessoas,
             "observation": product.observation,
             "contato": product.contato,
-            "pagamento": pagamentof,
+            "pagamento": product.pagamento,
             "concluido": concluidors,
           },
         ),

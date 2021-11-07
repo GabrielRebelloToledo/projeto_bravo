@@ -1,8 +1,8 @@
 import 'package:bravo/provider/gerencia.dart';
 import 'package:bravo/provider/pessoas.dart';
 import 'package:bravo/provider/user_register_provider.dart';
-import 'package:bravo/views/auth_or_home_page.dart';
 import 'package:bravo/views/cadastro.dart';
+import 'package:bravo/views/form_gerencia.dart';
 import 'package:bravo/views/gerencia_page.dart';
 import 'package:bravo/views/home.dart';
 import 'package:bravo/views/splash_screen.dart';
@@ -11,7 +11,6 @@ import 'package:bravo/views/user_registration.dart';
 import 'package:bravo/views/users_not_register_page.dart';
 import 'package:bravo/views/users_views.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'models/auth.dart';
 import 'routes/routes.dart';
@@ -78,6 +77,7 @@ class MyApp extends StatelessWidget {
             Routes.splashScreen: (ctx) => SplashScreen(),
             Routes.cadastro: (ctx) => UserRegistration(),
             Routes.cadastroP: (ctx) => ProductFormPage(),
+            Routes.formGerencia: (ctx) => FormGerencia(),
             Routes.usuarios: (ctx) => UsersViews(),
             Routes.termos: (ctx) => Termos(),
             Routes.paginaCadastro: (ctx) => UsersNotRegister(),

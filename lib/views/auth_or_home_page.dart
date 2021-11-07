@@ -1,7 +1,6 @@
 import 'package:bravo/models/auth.dart';
-import 'package:bravo/models/user_register.dart';
 import 'package:bravo/views/auth_page.dart';
-import 'package:bravo/views/home.dart';
+import 'package:bravo/views/gerencia_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class AuthOrHomePage extends StatelessWidget {
             child: Text('Ocorreu um erro!'),
           );
         } else {
-          return auth.isAuth ?  Home() : AuthPage();
+          return auth.isAuth ?  PageGerencia() : AuthPage();
         }
       },
     );
