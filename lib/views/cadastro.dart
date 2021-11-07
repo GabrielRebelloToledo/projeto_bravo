@@ -222,9 +222,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           hintText: 'A observação é opcional!'),
                       textInputAction: TextInputAction.next,
                       focusNode: _ObsFocus,
-                      keyboardType: TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
+                      
                       onFieldSubmitted: (_) {
                         FocusScope.of(context).requestFocus(_ObsFocus);
                       },

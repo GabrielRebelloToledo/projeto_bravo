@@ -67,7 +67,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                   padding: const EdgeInsets.only(bottom: 1),
                   child: Row(
                     children: [
-                      IconButton(
+                      /* IconButton(
                         icon: Icon(Icons.edit),
                         color: Colors.green,
                         onPressed: () {
@@ -76,7 +76,7 @@ class _ListGerenciaState extends State<ListGerencia> {
                             arguments: widget.pessoa,
                           );
                         },
-                      ),
+                      ), */
                       IconButton(
                         icon: Icon(Icons.delete),
                         color: Theme.of(context).errorColor,

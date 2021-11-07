@@ -23,8 +23,8 @@ class AppDrawer extends StatelessWidget {
               height: 300,
             ),
           ),
-          Divider(),
-          /* ListTile(
+          /* Divider(),
+           ListTile(
             leading: Icon(Icons.list_alt_outlined),
             title: Text('Suas Reservas'),
             onTap: () {
@@ -42,7 +42,7 @@ class AppDrawer extends StatelessWidget {
                 Routes.cadastroP,
               );
             },
-          ), */
+          ),  */
           /* Divider(), */
           ListTile(
             leading: Icon(Icons.paste),

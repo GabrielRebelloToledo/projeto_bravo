@@ -1,6 +1,7 @@
 import 'package:bravo/models/auth.dart';
 import 'package:bravo/views/auth_page.dart';
 import 'package:bravo/views/gerencia_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
